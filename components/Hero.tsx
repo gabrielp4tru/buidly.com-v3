@@ -88,7 +88,7 @@ export default function Hero() {
           <div>
             <div className="chip on-dark" style={{ marginBottom: 32 }}>
               <span className="dot" />
-              3 of 4 Q2 slots filled · 1 remaining
+              3 of 4 Q2 slots filled
             </div>
 
             <h1 className="display" style={{ color: "#fff", marginTop: 0, marginBottom: 28 }}>
@@ -127,7 +127,7 @@ export default function Hero() {
               </span>
               .
               <br />
-              <span className="italic">Built</span> to last.
+              <span className="italic">Engineered</span> to last.
               <br />
               <span className="italic">Shipped</span> in weeks.
             </h1>
@@ -136,15 +136,16 @@ export default function Hero() {
               className="lead"
               style={{ color: "rgba(255,255,255,.7)", maxWidth: 520, marginBottom: 40 }}
             >
-              We&apos;re a senior engineering studio that treats your product like we treat our own. Five years in, 25+ products shipped,{" "}
-              <span style={{ color: "var(--blue-bright)", fontWeight: 600 }}>$100M+</span> in critical
-              infrastructure,{" "}
-              <span style={{ color: "#fff", fontWeight: 600 }}>zero</span> security incidents.
+              We&apos;re a senior engineering studio that treats your product like equity.
+              <br /><br />
+              Five years. 25+ products.{" "}
+              <span style={{ color: "var(--blue-bright)", fontWeight: 600 }}>$100M+</span> in critical infrastructure.{" "}
+              <span style={{ color: "#fff", fontWeight: 600 }}>Zero</span> security incidents.
             </p>
 
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 56 }}>
               <a href="#cta" className="btn btn-dark">
-                Book a free call
+                Book a call
                 <svg
                   className="arrow"
                   viewBox="0 0 16 16"

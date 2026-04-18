@@ -57,8 +57,8 @@ export default function TrustBar() {
                 0
               </span>
               <div style={{ fontSize: 13, color: "var(--ink)", fontWeight: 500 }}>
-                security incidents ·{" "}
-                <span style={{ color: "var(--fg3)" }}>5 years, 25+ products</span>
+                security incidents{" "}
+                <span style={{ color: "var(--fg3)" }}>· 5 years · 25+ products</span>
               </div>
             </div>
           </div>

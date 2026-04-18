@@ -3,9 +3,9 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Buidly — Your next app, built to last, shipped in weeks.",
+  title: "Buidly — Engineering that moves your business forward.",
   description:
-    "Senior engineering studio. Web, mobile, SaaS, AI, Web3. 25+ products shipped, $100M+ in critical infrastructure, zero security incidents.",
+    "Senior engineering studio. We solve business problems with code. 25+ products shipped. $100M+ secured. Zero incidents.",
 };
 
 const DEFAULT_ACCENT = "#0b80ef";

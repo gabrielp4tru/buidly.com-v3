@@ -6,20 +6,20 @@ const SERVICES = [
   {
     id: "mvp",
     num: "01",
-    problem: "You need to ship an MVP — fast, without cutting corners later.",
+    problem: "Ship fast. Don't cut corners.",
     solution: "Sprint MVP",
-    desc: "Idea to deployed product in 4–8 weeks. Production-ready code, not a throwaway prototype. UX, engineering, and deployment in one scope.",
+    desc: "Idea to deployed product in 4–8 weeks. Production-ready code. UX, engineering, deployment — one scope.",
     tags: ["Next.js", "TypeScript", "Postgres", "Stripe", "Vercel"],
     stat: { num: "4-8", unit: "weeks" },
     budget: "€5–12K",
-    example: "Burnify — shipped to production in 6 weeks",
+    example: "Burnify — production in 6 weeks",
   },
   {
     id: "custom",
     num: "02",
-    problem: "Your workflow is stuck in spreadsheets. You need a tool built for it.",
+    problem: "Your workflow lives in spreadsheets.",
     solution: "Custom Web & Mobile Apps",
-    desc: "Replace spreadsheets, manual processes, or generic SaaS. Responsive web + native mobile, integrated with your existing tools.",
+    desc: "Replace manual processes with purpose-built tools. Web + native mobile. Integrated with what you already use.",
     tags: ["React Native", "Node", "GraphQL", "AWS", "Figma"],
     stat: { num: "25+", unit: "shipped" },
     budget: "€12–35K",
@@ -28,33 +28,33 @@ const SERVICES = [
   {
     id: "saas",
     num: "03",
-    problem: "You're building a commercial product and users will pay monthly.",
+    problem: "You're building a product people pay for monthly.",
     solution: "SaaS & Platform",
-    desc: "Multi-tenant architecture, billing, auth, user management, API layer, analytics. Scale-ready from day one.",
+    desc: "Multi-tenant architecture. Billing. Auth. API layer. Analytics. Scale-ready from day one.",
     tags: ["Multi-tenant", "Stripe", "RBAC", "OpenAPI", "Kubernetes"],
-    stat: { num: "99.98%", unit: "uptime avg" },
+    stat: { num: "99.98%", unit: "uptime" },
     budget: "€35–120K",
     example: "Surflux — data layer powering Sui dev ecosystem",
   },
   {
     id: "ai",
     num: "04",
-    problem: "You want AI to handle the repetitive work — chat, docs, workflows.",
+    problem: "Repetitive work is eating your margin.",
     solution: "AI Integration",
-    desc: "Chatbots, document processing, workflow automation with LLMs. Add AI capabilities to existing products or build new ones.",
+    desc: "Chatbots. Document processing. Workflow automation. Add AI to existing products or build new ones.",
     tags: ["OpenAI", "Anthropic", "RAG", "LangGraph", "Pinecone"],
     stat: { num: "40%", unit: "time saved" },
     budget: "€8–45K",
-    example: "Support agent handling 2k+ tickets/mo for SaaS client",
+    example: "Support agent — 2k+ tickets/mo for SaaS client",
   },
   {
     id: "web3",
     num: "05",
-    problem: "You need trustless code — smart contracts, dApps, or protocol infra.",
+    problem: "You need trustless infrastructure.",
     solution: "Web3 & Blockchain",
-    desc: "Smart contracts in Rust, Move, Solidity. dApps, DeFi protocols, cross-chain infrastructure. Trusted by Mysten Labs, MultiversX.",
+    desc: "Smart contracts in Rust, Move, Solidity. dApps. DeFi protocols. Cross-chain infrastructure. Trusted by Mysten Labs and MultiversX.",
     tags: ["Move", "Rust", "Solidity", "Sui", "MultiversX"],
-    stat: { num: "$100M+", unit: "assets secured" },
+    stat: { num: "$100M+", unit: "secured" },
     budget: "€20–200K",
     example: "OneFinity bridge — cross-chain, $100M+ TVL",
   },
@@ -69,16 +69,15 @@ export default function Services() {
       <div className="wrap-wide">
         <div className="section-head">
           <div>
-            <div className="eyebrow" style={{ marginBottom: 20 }}>What the client needs</div>
+            <div className="eyebrow" style={{ marginBottom: 20 }}>What you need</div>
             <h2 className="display">
-              Tell us your{" "}
-              <span className="italic" style={{ color: "var(--accent)" }}>problem.</span>
+              You have a problem.
               <br />
-              We&apos;ll tell you the <span className="italic">fix.</span>
+              We have the <span className="italic" style={{ color: "var(--accent)" }}>fix.</span>
             </h2>
           </div>
           <p className="lead">
-            Every engagement starts here. Pick the scenario closest to yours — we&apos;ll show you the shape of the work, the stack, and what it costs.
+            Every engagement starts with your challenge. Pick the scenario closest to yours — we&apos;ll show you the shape, the stack, and the cost.
           </p>
         </div>
 

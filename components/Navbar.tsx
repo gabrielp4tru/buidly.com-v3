@@ -95,7 +95,7 @@ export default function Navbar() {
                 boxShadow: "0 0 0 3px rgba(23,178,106,.25)",
               }}
             />
-            Accepting Q2 slots
+            Q2 slots open
           </span>
           <a
             href="#cta"
@@ -108,7 +108,7 @@ export default function Navbar() {
               fontSize: 14,
             }}
           >
-            Book a call
+            Let&apos;s talk
             <svg
               className="arrow"
               viewBox="0 0 16 16"

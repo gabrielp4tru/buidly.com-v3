@@ -49,15 +49,15 @@ export default function Pillars() {
       <div className="wrap-wide">
         <div className="section-head">
           <div>
-            <div className="eyebrow" style={{ marginBottom: 20 }}>What the client gets</div>
+            <div className="eyebrow" style={{ marginBottom: 20 }}>What you get</div>
             <h2 className="display">
-              Three things you won&apos;t
+              Three things you won&apos;t find
               <br />
-              get <span className="italic" style={{ color: "var(--accent)" }}>anywhere else.</span>
+              <span className="italic" style={{ color: "var(--accent)" }}>elsewhere.</span>
             </h2>
           </div>
           <p className="lead">
-            Most studios trade off between quality, speed, and cost. Our delivery model — senior-only, AI-augmented, outcome-priced — removes the trade.
+            Most studios trade off quality, speed, or cost. Our model — senior-only, AI-augmented, outcome-priced — removes the trade.
           </p>
         </div>
 
