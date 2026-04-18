@@ -7,11 +7,10 @@ import Process from "@/components/Process";
 import CaseStudies from "@/components/CaseStudies";
 import Testimonials from "@/components/Testimonials";
 import { CTA, Footer } from "@/components/CTA";
-import Tweaks from "@/components/Tweaks";
 
 export default function Page() {
   return (
-    <>
+    <main>
       <Navbar />
       <Hero />
       <TrustBar />
@@ -22,7 +21,6 @@ export default function Page() {
       <Testimonials />
       <CTA />
       <Footer />
-      <Tweaks />
-    </>
+    </main>
   );
 }

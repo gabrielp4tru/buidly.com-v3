@@ -1,16 +1,18 @@
-import type { Metadata } from "next";
-import Script from "next/script";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Buidly — Your next app, built to last, shipped in weeks.",
+  title: "Buidly — Tech Hub | UX-First Web3 & Business Technology | Berlin",
   description:
-    "Senior engineering studio. Web, mobile, SaaS, AI, Web3. 25+ products shipped, $100M+ in critical infrastructure, zero security incidents.",
+    "Senior engineering studio. UX-first approach for complex Web3 and business technology projects. 25+ products shipped, $100M+ in critical infrastructure. Based in Berlin.",
+  keywords: ["Web3", "Blockchain", "UX Design", "Software Development", "Berlin", "Tech Hub", "Smart Contracts", "SaaS"],
 };
 
-const DEFAULT_ACCENT = "#0b80ef";
-const DEFAULT_DENSITY = "default";
-const DEFAULT_PATTERN = "on";
+export const viewport: Viewport = {
+  themeColor: "#0d0d0d",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export default function RootLayout({
   children,
@@ -18,14 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" style={{ ["--accent" as string]: DEFAULT_ACCENT }}>
-      <body data-density={DEFAULT_DENSITY} data-pattern={DEFAULT_PATTERN}>
-        {/* Expose tweak defaults for the Tweaks panel (no DOM mutation here — avoids hydration mismatch) */}
-        <Script id="tweak-defaults" strategy="beforeInteractive">
-          {`window.__TWEAK_DEFAULTS = { accent: 'blue', density: 'default', pattern: true };`}
-        </Script>
-        {children}
-      </body>
+    <html lang="en" className="bg-[#fafafa]">
+      <body>{children}</body>
     </html>
   );
 }

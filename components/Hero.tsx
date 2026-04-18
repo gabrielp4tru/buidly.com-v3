@@ -1,149 +1,122 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const ROTATOR = [
-  { word: "app", tag: "iOS · Android · Web" },
-  { word: "platform", tag: "SaaS · Multi-tenant" },
-  { word: "dashboard", tag: "Analytics · Realtime" },
-  { word: "protocol", tag: "Move · Rust · Solidity" },
-  { word: "AI agent", tag: "LLM · RAG · Automation" },
+  { word: "app", tag: "iOS / Android / Web" },
+  { word: "platform", tag: "SaaS / Multi-tenant" },
+  { word: "dashboard", tag: "Analytics / Realtime" },
+  { word: "protocol", tag: "Move / Rust / Solidity" },
+  { word: "AI agent", tag: "LLM / RAG / Automation" },
 ];
 
 export default function Hero() {
   const [i, setI] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
-    const t = setInterval(() => setI((x) => (x + 1) % ROTATOR.length), 2600);
+    setMounted(true);
+    const t = setInterval(() => setI((x) => (x + 1) % ROTATOR.length), 3000);
     return () => clearInterval(t);
   }, []);
+
+  if (!mounted) return <div className="min-h-screen" style={{ background: "var(--bg-dark)" }} />;
 
   return (
     <section
       id="top"
-      style={{
-        position: "relative",
-        background: "linear-gradient(180deg, #061b39 0%, #0a2957 60%, #061b39 100%)",
-        color: "#fff",
-        overflow: "hidden",
-        paddingTop: 120,
-        paddingBottom: 100,
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-      }}
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ background: "var(--bg-dark)" }}
     >
-      <div className="blueprint-dark pattern-optional" style={{ position: "absolute", inset: 0, opacity: 0.8 }} />
+      {/* Grid pattern background */}
+      <div className="pattern-grid-dark absolute inset-0 opacity-60" />
+
+      {/* Animated gradient orbs */}
       <div
+        className="absolute top-[-20%] right-[-10%] w-[60%] h-[80%] rounded-full blur-[120px]"
         style={{
-          position: "absolute",
-          top: "-20%",
-          right: "-10%",
-          width: "70%",
-          height: "120%",
-          background:
-            "radial-gradient(ellipse at center, rgba(11,128,239,.35) 0%, transparent 50%)",
-          pointerEvents: "none",
+          background: "radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)",
         }}
       />
       <div
+        className="absolute bottom-[-20%] left-[-10%] w-[50%] h-[70%] rounded-full blur-[100px]"
         style={{
-          position: "absolute",
-          bottom: "-30%",
-          left: "-10%",
-          width: "60%",
-          height: "90%",
-          background:
-            "radial-gradient(ellipse at center, rgba(232,70,90,.12) 0%, transparent 55%)",
-          pointerEvents: "none",
+          background: "radial-gradient(circle, rgba(200, 255, 0, 0.08) 0%, transparent 70%)",
         }}
       />
 
-      <div
-        style={{
-          position: "absolute",
-          top: 100,
-          left: 32,
-          right: 32,
-          display: "flex",
-          justifyContent: "space-between",
-          fontFamily: "JetBrains Mono, monospace",
-          fontSize: 11,
-          color: "rgba(255,255,255,.4)",
-        }}
-      >
-        <span>BUIDLY / EST. 2020 / BUCHAREST · LISBON</span>
-        <span>v.26.04 — SHIPPING</span>
-      </div>
-
-      <div className="wrap-wide" style={{ position: "relative", width: "100%" }}>
-        <div
-          className="hero-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(0, 1.25fr) minmax(0, 1fr)",
-            gap: 64,
-            alignItems: "center",
-          }}
-        >
-          <div>
-            <div className="chip on-dark" style={{ marginBottom: 32 }}>
+      {/* Main content */}
+      <div className="container relative z-10 pt-32 pb-20">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-16 lg:gap-20">
+          {/* Left column - Main content */}
+          <div className="flex-1 max-w-[720px]">
+            {/* Status tag */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="tag tag-electric mb-8"
+            >
               <span className="dot" />
-              3 of 4 Q2 slots filled · 1 remaining
-            </div>
+              <span>3 of 4 Q2 slots filled</span>
+            </motion.div>
 
-            <h1 className="display" style={{ color: "#fff", marginTop: 0, marginBottom: 28 }}>
+            {/* Main headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="display-xl mb-8"
+              style={{ color: "var(--white)" }}
+            >
               Your next{" "}
-              <span
-                style={{
-                  position: "relative",
-                  display: "inline-block",
-                  minWidth: "5.5ch",
-                  verticalAlign: "baseline",
-                }}
-              >
-                <span style={{ visibility: "hidden" }}>{ROTATOR[0].word}</span>
+              <span className="relative inline-block min-w-[3ch]">
+                <span className="invisible">{ROTATOR[0].word}</span>
                 {ROTATOR.map((r, idx) => (
-                  <span
+                  <motion.span
                     key={idx}
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      color: "var(--accent)",
+                    className="absolute inset-0 flex items-center"
+                    initial={false}
+                    animate={{
                       opacity: idx === i ? 1 : 0,
-                      transform:
-                        idx === i
-                          ? "translateY(0)"
-                          : idx < i
-                          ? "translateY(-24px)"
-                          : "translateY(24px)",
-                      transition: "all .6s var(--ease)",
+                      y: idx === i ? 0 : idx < i ? -20 : 20,
                     }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ color: "var(--electric)" }}
                   >
                     {r.word}
-                  </span>
+                  </motion.span>
                 ))}
               </span>
-              .
               <br />
-              <span className="italic">Built</span> to last.
+              <span style={{ color: "var(--white-dim)" }}>Built to last.</span>
               <br />
-              <span className="italic">Shipped</span> in weeks.
-            </h1>
+              <span style={{ color: "var(--white-dim)" }}>Shipped in weeks.</span>
+            </motion.h1>
 
-            <p
-              className="lead"
-              style={{ color: "rgba(255,255,255,.7)", maxWidth: 520, marginBottom: 40 }}
+            {/* Subheadline */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-xl mb-10 max-w-[560px]"
+              style={{ color: "var(--white-muted)" }}
             >
-              We&apos;re a senior engineering studio that treats your product like we treat our own. Five years in, 25+ products shipped,{" "}
-              <span style={{ color: "var(--blue-bright)", fontWeight: 600 }}>$100M+</span> in critical
-              infrastructure,{" "}
-              <span style={{ color: "#fff", fontWeight: 600 }}>zero</span> security incidents.
-            </p>
+              We are a senior engineering studio that treats your product like we treat our own. 
+              Five years in, 25+ products shipped,{" "}
+              <span style={{ color: "var(--electric)" }}>$100M+</span> in critical infrastructure,{" "}
+              <span style={{ color: "var(--white)" }}>zero</span> security incidents.
+            </motion.p>
 
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 56 }}>
-              <a href="#cta" className="btn btn-dark">
+            {/* CTA buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="flex flex-wrap gap-4 mb-16"
+            >
+              <a href="#cta" className="btn btn-primary">
                 Book a free call
                 <svg
                   className="arrow"
@@ -155,19 +128,18 @@ export default function Hero() {
                   <path d="M3 8h10M9 4l4 4-4 4" />
                 </svg>
               </a>
-              <a href="#work" className="btn btn-on-dark">
+              <a href="#work" className="btn btn-secondary-dark">
                 See our work
               </a>
-            </div>
+            </motion.div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: 0,
-                borderTop: "1px solid rgba(255,255,255,.15)",
-                paddingTop: 32,
-              }}
+            {/* Stats row */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex gap-0"
+              style={{ borderTop: "1px solid var(--border-dark)" }}
             >
               {[
                 { num: "25+", label: "Products shipped", sub: "2020 — today" },
@@ -176,71 +148,62 @@ export default function Hero() {
               ].map((s, idx) => (
                 <div
                   key={idx}
+                  className="flex-1 pt-8"
                   style={{
                     paddingRight: 24,
-                    borderRight: idx < 2 ? "1px solid rgba(255,255,255,.08)" : "none",
                     paddingLeft: idx > 0 ? 24 : 0,
+                    borderRight: idx < 2 ? "1px solid var(--border-dark)" : "none",
                   }}
                 >
                   <div
+                    className="font-display text-4xl md:text-5xl mb-2"
                     style={{
-                      fontSize: 44,
-                      fontWeight: 800,
-                      letterSpacing: "-0.03em",
-                      color: s.highlight ? "var(--coral)" : "#fff",
-                      lineHeight: 1,
-                      marginBottom: 10,
+                      color: s.highlight ? "var(--coral)" : "var(--white)",
                       fontFeatureSettings: '"tnum"',
                     }}
                   >
                     {s.num}
                   </div>
-                  <div style={{ fontSize: 13, color: "rgba(255,255,255,.85)", fontWeight: 500 }}>
+                  <div className="text-sm mb-1" style={{ color: "var(--white-dim)" }}>
                     {s.label}
                   </div>
-                  <div
-                    className="mono"
-                    style={{
-                      fontSize: 10.5,
-                      color: "rgba(255,255,255,.4)",
-                      marginTop: 4,
-                      letterSpacing: ".05em",
-                    }}
-                  >
+                  <div className="mono text-xs" style={{ color: "var(--white-subtle)" }}>
                     {s.sub}
                   </div>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
-          <div className="hero-device" style={{ position: "relative" }}>
+          {/* Right column - Visual element */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="hidden lg:block flex-shrink-0 w-[460px]"
+          >
             <LiveProductMock rotatorIdx={i} />
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      <div
-        style={{
-          position: "absolute",
-          bottom: 24,
-          left: "50%",
-          transform: "translateX(-50%)",
-          fontFamily: "JetBrains Mono, monospace",
-          fontSize: 10,
-          color: "rgba(255,255,255,.4)",
-          letterSpacing: ".2em",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 8,
-        }}
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        SCROLL
-        <svg width="1" height="28" viewBox="0 0 1 28">
-          <line x1="0.5" y1="0" x2="0.5" y2="28" stroke="rgba(255,255,255,.3)" />
-        </svg>
-      </div>
+        <span className="mono text-xs" style={{ color: "var(--white-subtle)", letterSpacing: "0.2em" }}>
+          SCROLL
+        </span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="w-px h-8"
+          style={{ background: "var(--white-subtle)" }}
+        />
+      </motion.div>
     </section>
   );
 }
@@ -249,290 +212,156 @@ function LiveProductMock({ rotatorIdx }: { rotatorIdx: number }) {
   const data = ROTATOR[rotatorIdx];
 
   return (
-    <div style={{ position: "relative", padding: "0 12px" }}>
+    <div className="relative">
+      {/* Label */}
       <div
-        className="mono"
-        style={{
-          position: "absolute",
-          top: -28,
-          left: 14,
-          fontSize: 10,
-          color: "rgba(255,255,255,.4)",
-          letterSpacing: ".15em",
-        }}
+        className="mono text-xs mb-4"
+        style={{ color: "var(--white-subtle)", letterSpacing: "0.1em" }}
       >
         FIG.01 — {data.tag.toUpperCase()}
       </div>
 
-      <div
+      {/* Mock terminal/dashboard */}
+      <motion.div
+        className="relative rounded-2xl overflow-hidden"
         style={{
-          background: "linear-gradient(180deg, #0d2d5c 0%, #081f42 100%)",
-          borderRadius: 18,
-          border: "1px solid rgba(255,255,255,.1)",
-          boxShadow: "0 40px 80px -20px rgba(0,0,0,.5), 0 0 0 1px rgba(77,184,255,.1)",
-          overflow: "hidden",
-          transform: "perspective(2000px) rotateY(-4deg) rotateX(3deg)",
+          background: "linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%)",
+          border: "1px solid var(--border-dark)",
+          boxShadow: "0 40px 80px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(0, 212, 255, 0.1)",
         }}
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.3 }}
       >
+        {/* Window controls */}
         <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            padding: "12px 16px",
-            borderBottom: "1px solid rgba(255,255,255,.08)",
-            background: "rgba(0,0,0,.2)",
-          }}
+          className="flex items-center gap-3 px-4 py-3"
+          style={{ borderBottom: "1px solid var(--border-dark)" }}
         >
-          <div style={{ display: "flex", gap: 6 }}>
-            <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5f57" }} />
-            <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#febc2e" }} />
-            <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#28c840" }} />
+          <div className="flex gap-2">
+            <span className="w-3 h-3 rounded-full" style={{ background: "#ff5f57" }} />
+            <span className="w-3 h-3 rounded-full" style={{ background: "#febc2e" }} />
+            <span className="w-3 h-3 rounded-full" style={{ background: "#28c840" }} />
           </div>
-          <div
-            className="mono"
-            style={{
-              flex: 1,
-              textAlign: "center",
-              fontSize: 11,
-              color: "rgba(255,255,255,.45)",
-            }}
-          >
+          <div className="flex-1 text-center mono text-xs" style={{ color: "var(--white-subtle)" }}>
             ~/buidly/{data.word.replace(/ /g, "-").toLowerCase()}
           </div>
-          <div className="mono" style={{ fontSize: 10, color: "rgba(77,184,255,.7)" }}>
-            ●  LIVE
+          <div className="mono text-xs" style={{ color: "var(--electric)" }}>
+            ● LIVE
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", minHeight: 420 }}>
-          <div
-            style={{
-              background: "rgba(0,0,0,.15)",
-              borderRight: "1px solid rgba(255,255,255,.06)",
-              padding: "16px 12px",
-            }}
-          >
-            <div
-              className="mono"
-              style={{
-                fontSize: 9,
-                color: "rgba(255,255,255,.35)",
-                letterSpacing: ".1em",
-                marginBottom: 10,
-              }}
-            >
-              PIPELINE
+        <div className="p-5">
+          {/* Project header */}
+          <div className="flex justify-between items-start mb-5">
+            <div>
+              <div className="mono text-xs mb-1" style={{ color: "var(--electric)" }}>
+                PROJECT / {data.tag.split(" / ")[0].toUpperCase()}
+              </div>
+              <div className="font-display text-lg" style={{ color: "var(--white)" }}>
+                Your next {data.word}
+              </div>
             </div>
+            <div className="mono text-xs" style={{ color: "var(--white-subtle)" }}>
+              wk 4 / 6
+            </div>
+          </div>
+
+          {/* Progress bars */}
+          <div className="space-y-3 mb-5">
             {[
               { l: "Discover", d: 100 },
               { l: "Design", d: 100 },
               { l: "Build", d: 68 },
               { l: "Launch", d: 0 },
             ].map((s, idx) => (
-              <div key={idx} style={{ marginBottom: 14 }}>
+              <div key={idx}>
                 <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontSize: 11,
-                    color: s.d === 100 ? "var(--blue-bright)" : "rgba(255,255,255,.7)",
-                    marginBottom: 5,
-                    fontWeight: 500,
-                  }}
+                  className="flex justify-between text-xs mb-1"
+                  style={{ color: s.d === 100 ? "var(--electric)" : "var(--white-muted)" }}
                 >
                   <span>
                     {idx + 1}. {s.l}
                   </span>
                   {s.d === 100 && (
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                      <path d="M2 5l2 2 4-4" stroke="currentColor" strokeWidth="1.5" />
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path d="M2.5 6l2.5 2.5 5-5" stroke="currentColor" strokeWidth="1.5" />
                     </svg>
                   )}
                 </div>
-                <div style={{ height: 3, background: "rgba(255,255,255,.08)", borderRadius: 2 }}>
-                  <div
+                <div
+                  className="h-1 rounded-full overflow-hidden"
+                  style={{ background: "var(--border-dark)" }}
+                >
+                  <motion.div
+                    className="h-full rounded-full"
                     style={{
-                      width: `${s.d}%`,
-                      height: "100%",
-                      background: s.d === 100 ? "var(--green)" : "var(--blue-bright)",
-                      borderRadius: 2,
-                      transition: "width .6s var(--ease)",
+                      background: s.d === 100 ? "var(--green)" : "var(--electric)",
                     }}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${s.d}%` }}
+                    transition={{ duration: 0.8, delay: idx * 0.1 }}
                   />
                 </div>
               </div>
             ))}
-            <div
-              style={{
-                marginTop: 24,
-                padding: 10,
-                background: "rgba(77,184,255,.06)",
-                borderRadius: 6,
-                border: "1px solid rgba(77,184,255,.15)",
-              }}
-            >
-              <div
-                className="mono"
-                style={{ fontSize: 9, color: "rgba(255,255,255,.5)", marginBottom: 4 }}
-              >
-                ETA
-              </div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: "#fff" }}>6 weeks</div>
-            </div>
           </div>
 
-          <div style={{ padding: 18, display: "flex", flexDirection: "column", gap: 14 }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>
-                <div
-                  className="mono"
-                  style={{
-                    fontSize: 10,
-                    color: "var(--blue-bright)",
-                    letterSpacing: ".1em",
-                    marginBottom: 4,
-                  }}
-                >
-                  PROJECT / {data.tag.split(" · ")[0].toUpperCase()}
-                </div>
-                <div style={{ fontSize: 17, fontWeight: 700, color: "#fff" }}>
-                  Your next {data.word}
-                </div>
-              </div>
-              <div className="mono" style={{ fontSize: 10, color: "rgba(255,255,255,.4)" }}>
-                wk 4 / 6
-              </div>
+          {/* Terminal output */}
+          <div
+            className="rounded-lg p-3 mono text-xs leading-relaxed"
+            style={{ background: "rgba(0,0,0,0.4)", border: "1px solid var(--border-dark)" }}
+          >
+            <div style={{ color: "var(--white-subtle)" }}>
+              <span style={{ color: "var(--electric)" }}>$</span> buidly deploy --env production
             </div>
+            <div style={{ color: "var(--white-muted)" }}>
+              → Tests <span style={{ color: "var(--green)" }}>1,247 passed</span>
+            </div>
+            <div style={{ color: "var(--white-muted)" }}>
+              → Bundle <span style={{ color: "var(--lime)" }}>142kb</span> gzip
+            </div>
+            <div style={{ color: "var(--green)" }}>✓ Shipped in 4m 12s</div>
+          </div>
 
-            <div
-              style={{
-                background: "rgba(0,0,0,.35)",
-                borderRadius: 8,
-                border: "1px solid rgba(255,255,255,.06)",
-                padding: 12,
-                fontSize: 11,
-                lineHeight: 1.65,
-                fontFamily: "JetBrains Mono, monospace",
-              }}
-            >
-              <div style={{ color: "rgba(255,255,255,.4)" }}>
-                <span style={{ color: "var(--blue-bright)" }}>$</span> buidly deploy --env production
-              </div>
-              <div style={{ color: "rgba(255,255,255,.5)" }}>
-                → Building <span style={{ color: "#fff" }}>{data.word.replace(/ /g, "-").toLowerCase()}</span>...
-              </div>
-              <div style={{ color: "rgba(255,255,255,.5)" }}>
-                → Tests <span style={{ color: "var(--green)" }}>1,247 passed</span>
-              </div>
-              <div style={{ color: "rgba(255,255,255,.5)" }}>
-                → Bundle <span style={{ color: "var(--amber)" }}>142kb</span> gzip
-              </div>
-              <div style={{ color: "var(--green)" }}>
-                ✓ Shipped in <span style={{ fontWeight: 600 }}>4m 12s</span>
-              </div>
-            </div>
-
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
-              {[
-                { l: "Uptime", v: "99.98%", trend: "+0.02", color: "var(--green)" },
-                { l: "p95 latency", v: "84ms", trend: "-12ms", color: "var(--blue-bright)" },
-                { l: "Active users", v: "24.8k", trend: "+8.4%", color: "var(--green)" },
-                { l: "Error rate", v: "0.003%", trend: "−", color: "rgba(255,255,255,.6)" },
-              ].map((m, idx) => (
-                <div
-                  key={idx}
-                  style={{
-                    background: "rgba(255,255,255,.04)",
-                    border: "1px solid rgba(255,255,255,.06)",
-                    borderRadius: 8,
-                    padding: 10,
-                  }}
-                >
-                  <div
-                    className="mono"
-                    style={{
-                      fontSize: 9,
-                      color: "rgba(255,255,255,.4)",
-                      letterSpacing: ".08em",
-                      marginBottom: 4,
-                    }}
-                  >
-                    {m.l.toUpperCase()}
-                  </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                    <div
-                      style={{
-                        fontSize: 18,
-                        fontWeight: 700,
-                        color: "#fff",
-                        letterSpacing: "-0.02em",
-                      }}
-                    >
-                      {m.v}
-                    </div>
-                    <div className="mono" style={{ fontSize: 9.5, color: m.color }}>
-                      {m.trend}
-                    </div>
-                  </div>
+          {/* Metrics */}
+          <div className="grid grid-cols-2 gap-3 mt-4">
+            {[
+              { l: "Uptime", v: "99.98%" },
+              { l: "p95 latency", v: "84ms" },
+            ].map((m, idx) => (
+              <div
+                key={idx}
+                className="rounded-lg p-3"
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--border-dark)" }}
+              >
+                <div className="mono text-xs mb-1" style={{ color: "var(--white-subtle)" }}>
+                  {m.l.toUpperCase()}
                 </div>
-              ))}
-            </div>
-
-            <div style={{ display: "flex", alignItems: "end", gap: 3, height: 42, paddingTop: 6 }}>
-              {[18, 24, 20, 28, 32, 26, 34, 30, 38, 44, 40, 48, 52, 46, 54, 62, 58, 66, 72, 68, 78, 74, 82, 88].map(
-                (h, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      flex: 1,
-                      height: `${h}%`,
-                      background: "linear-gradient(180deg, var(--blue-bright), rgba(77,184,255,.2))",
-                      borderRadius: 1,
-                      opacity: 0.3 + (idx / 24) * 0.7,
-                    }}
-                  />
-                )
-              )}
-            </div>
+                <div className="font-display text-xl" style={{ color: "var(--white)" }}>
+                  {m.v}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      <div
+      {/* Floating badge */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8 }}
+        className="absolute -bottom-4 -right-4 flex items-center gap-2 px-4 py-2 rounded-xl"
         style={{
-          position: "absolute",
-          bottom: -18,
-          right: -12,
-          background: "#fff",
-          color: "var(--ink)",
-          padding: "10px 14px",
-          borderRadius: 10,
-          fontSize: 12,
-          fontWeight: 600,
-          boxShadow: "0 18px 40px -10px rgba(0,0,0,.4)",
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
+          background: "var(--bg-card)",
+          boxShadow: "0 20px 40px -10px rgba(0,0,0,0.4)",
         }}
       >
-        <span
-          style={{
-            width: 8,
-            height: 8,
-            borderRadius: "50%",
-            background: "var(--green)",
-            boxShadow: "0 0 0 3px rgba(23,178,106,.25)",
-          }}
-        />
-        Deployed 4m ago
-      </div>
+        <span className="dot" />
+        <span className="text-sm font-medium" style={{ color: "var(--ink)" }}>
+          Deployed 4m ago
+        </span>
+      </motion.div>
     </div>
   );
 }
