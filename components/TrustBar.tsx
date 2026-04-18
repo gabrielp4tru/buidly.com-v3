@@ -1,108 +1,76 @@
 "use client";
 
-export default function TrustBar() {
-  const logos = [
-    { name: "Mysten Labs" },
-    { name: "MultiversX" },
-    { name: "Claynosaurz" },
-    { name: "Gameloft" },
-    { name: "xPortal" },
-    { name: "OneFinity" },
-    { name: "Materia Prima" },
-    { name: "Umbrella" },
-    { name: "OneDex" },
-    { name: "Boogas" },
-  ];
+import { motion } from "framer-motion";
 
+const LOGOS = [
+  { name: "Mysten Labs" },
+  { name: "MultiversX" },
+  { name: "Claynosaurz" },
+  { name: "Gameloft" },
+  { name: "xPortal" },
+  { name: "OneFinity" },
+  { name: "Materia Prima" },
+  { name: "Umbrella" },
+  { name: "OneDex" },
+  { name: "Boogas" },
+];
+
+export default function TrustBar() {
   return (
-    <section
-      style={{
-        padding: "32px 0",
-        background: "#fff",
-        borderBottom: "1px solid var(--border)",
-      }}
-    >
-      <div className="wrap-wide">
-        <div
-          className="trust-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr auto",
-            gap: 40,
-            alignItems: "center",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "8px 14px",
-                background: "var(--bg-blue)",
-                border: "1px solid var(--blue-200)",
-                borderRadius: 999,
-              }}
-            >
+    <section className="py-8 bg-white border-b border-border relative overflow-hidden">
+      <div className="container">
+        <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-10">
+          {/* Security badge */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex-shrink-0"
+          >
+            <div className="flex items-center gap-3 px-4 py-2.5 bg-cyan/10 border border-cyan/20 rounded-full">
               <span
-                className="mono"
-                style={{
-                  fontSize: 24,
-                  fontWeight: 700,
-                  color: "var(--coral)",
-                  lineHeight: 1,
-                  fontFeatureSettings: '"tnum"',
-                }}
+                className="font-display text-2xl font-bold text-cyan"
+                style={{ fontFeatureSettings: '"tnum"' }}
               >
                 0
               </span>
-              <div style={{ fontSize: 13, color: "var(--ink)", fontWeight: 500 }}>
-                security incidents ·{" "}
-                <span style={{ color: "var(--fg3)" }}>5 years, 25+ products</span>
+              <div className="text-sm text-navy font-medium">
+                security incidents{" "}
+                <span className="text-muted">· 5 years, 25+ products</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
+          {/* Logo marquee */}
           <div
+            className="flex-1 overflow-hidden relative"
             style={{
-              overflow: "hidden",
-              position: "relative",
-              maxWidth: 800,
               maskImage:
                 "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
               WebkitMaskImage:
                 "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
             }}
           >
-            <div className="marquee-track">
-              {[...logos, ...logos].map((l, idx) => (
+            <motion.div
+              className="flex gap-0"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{
+                duration: 25,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            >
+              {[...LOGOS, ...LOGOS].map((logo, idx) => (
                 <div
                   key={idx}
-                  style={{
-                    padding: "0 28px",
-                    flexShrink: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    opacity: 0.55,
-                    transition: "opacity .2s",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-                  onMouseLeave={(e) => (e.currentTarget.style.opacity = ".55")}
+                  className="flex-shrink-0 px-6 md:px-8 flex items-center group"
                 >
-                  <div
-                    style={{
-                      fontSize: 16,
-                      fontWeight: 700,
-                      color: "var(--ink)",
-                      letterSpacing: "-0.02em",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {l.name}
-                  </div>
+                  <span className="font-display text-base font-semibold text-navy/50 group-hover:text-navy transition-colors duration-200 whitespace-nowrap">
+                    {logo.name}
+                  </span>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

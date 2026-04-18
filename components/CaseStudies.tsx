@@ -1,3 +1,8 @@
+"use client";
+
+import { useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
+
 type Metric = { v: string; u: string };
 type CaseData = {
   num: string;
@@ -27,7 +32,7 @@ const CASES: CaseData[] = [
       { v: "42ms", u: "p95 latency" },
     ],
     mock: "dashboard",
-    accent: "#4da2ff",
+    accent: "#01C8F0",
     quote: '"Buidly pushing infra forward on Sui where it matters."',
     quoteBy: "George Danezis · Chief Scientist, Mysten Labs",
   },
@@ -44,7 +49,7 @@ const CASES: CaseData[] = [
       { v: "4", u: "chains bridged" },
     ],
     mock: "bridge",
-    accent: "#e8465a",
+    accent: "#0198FF",
     quote: '"The kind of infrastructure work most teams can\'t even scope, let alone ship."',
     quoteBy: "Lucian Mincu · Co-Founder, MultiversX",
   },
@@ -61,46 +66,71 @@ const CASES: CaseData[] = [
       { v: "12s", u: "mint settlement" },
     ],
     mock: "mobile",
-    accent: "#14f195",
+    accent: "#01C8F0",
     quote: '"Buidly is the kind of best-kept-secret team I want all to myself."',
     quoteBy: "Nypam · Head of Product, Claynosaurz",
   },
 ];
 
 export default function CaseStudies() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id="work"
-      className="section"
-      style={{ background: "var(--bg-tint)", borderTop: "1px solid var(--border)" }}
+      className="section bg-background border-t border-border relative overflow-hidden"
     >
-      <div className="wrap-wide">
-        <div className="section-head">
-          <div>
-            <div className="eyebrow" style={{ marginBottom: 20 }}>Selected work · 2024–2025</div>
-            <h2 className="display">
-              Production code.
-              <br />
-              Real <span className="italic" style={{ color: "var(--accent)" }}>outcomes.</span>
-            </h2>
-          </div>
-          <p className="lead">
-            Three representative projects. The rest — and the ones under NDA — live in our portfolio. Every case study links to a longer write-up.
+      {/* Background */}
+      <div className="absolute inset-0 bg-grid opacity-30" />
+
+      <div className="container relative">
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="max-w-3xl mb-12 md:mb-16"
+        >
+          <div className="eyebrow mb-4">Selected work · 2024-2025</div>
+          <h2 className="headline-lg text-navy mb-6">
+            Production code.
+            <br />
+            Real <span className="text-gradient">outcomes.</span>
+          </h2>
+          <p className="body-lg max-w-xl">
+            Three representative projects. The rest — and the ones under NDA —
+            live in our portfolio. Every case study links to a longer write-up.
           </p>
-        </div>
+        </motion.div>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      {/* Case cards */}
+      <div className="space-y-6 md:space-y-8">
         {CASES.map((c, idx) => (
-          <CaseStudyCard key={c.num} data={c} flip={idx % 2 === 1} />
+          <CaseStudyCard key={c.num} data={c} flip={idx % 2 === 1} isVisible={isVisible} delay={idx * 0.2} />
         ))}
       </div>
 
-      <div className="wrap-wide" style={{ marginTop: 48, textAlign: "center" }}>
-        <a href="#" className="btn btn-ghost">
+      {/* CTA */}
+      <div className="container mt-12 text-center">
+        <a href="#" className="btn btn-secondary">
           See all 25+ projects
           <svg
-            className="arrow"
+            className="w-4 h-4"
             viewBox="0 0 16 16"
             fill="none"
             stroke="currentColor"
@@ -114,224 +144,142 @@ export default function CaseStudies() {
   );
 }
 
-function CaseStudyCard({ data, flip }: { data: CaseData; flip: boolean }) {
+function CaseStudyCard({
+  data,
+  flip,
+  isVisible,
+  delay,
+}: {
+  data: CaseData;
+  flip: boolean;
+  isVisible: boolean;
+  delay: number;
+}) {
   return (
-    <div className="wrap-wide">
-      <article
-        className="case-card"
-        style={{
-          background: "#fff",
-          borderRadius: 24,
-          border: "1px solid var(--border)",
-          overflow: "hidden",
-          display: "grid",
-          gridTemplateColumns: flip ? "1.05fr 1fr" : "1fr 1.05fr",
-          minHeight: 540,
-        }}
-      >
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay }}
+      className="container"
+    >
+      <article className="card overflow-hidden">
         <div
-          className="case-content"
-          style={{
-            padding: "56px 56px 48px",
-            order: flip ? 2 : 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            background: "#fff",
-          }}
+          className={`grid lg:grid-cols-2 ${
+            flip ? "lg:[direction:rtl] lg:*:[direction:ltr]" : ""
+          }`}
         >
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
-              <span className="mono" style={{ fontSize: 12, color: "var(--fg4)", letterSpacing: ".15em" }}>
-                CASE / {data.num}
-              </span>
-              <span
-                style={{
-                  padding: "4px 10px",
-                  borderRadius: 4,
-                  background: data.accent + "14",
-                  color: data.accent,
-                  fontSize: 11,
-                  fontWeight: 600,
-                  letterSpacing: ".04em",
-                  fontFamily: "JetBrains Mono, monospace",
-                }}
-              >
-                {data.chain}
-              </span>
-              <span style={{ fontSize: 12, color: "var(--fg3)" }}>
-                · Client: <b style={{ color: "var(--ink)" }}>{data.client}</b>
-              </span>
-            </div>
-
-            <h3 className="display" style={{ fontSize: 48, marginBottom: 14, lineHeight: 1 }}>
-              {data.title}
-            </h3>
-            <p
-              style={{
-                fontSize: 20,
-                fontWeight: 500,
-                color: "var(--ink)",
-                margin: "0 0 16px",
-                letterSpacing: "-0.01em",
-                lineHeight: 1.3,
-              }}
-            >
-              {data.tagline}
-            </p>
-            <p
-              style={{
-                fontSize: 15,
-                color: "var(--fg3)",
-                lineHeight: 1.6,
-                marginBottom: 32,
-                maxWidth: 520,
-              }}
-            >
-              {data.desc}
-            </p>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: 0,
-                borderTop: "1px solid var(--border)",
-                paddingTop: 24,
-                marginBottom: 32,
-              }}
-            >
-              {data.metrics.map((m, i) => (
-                <div
-                  key={i}
+          {/* Content */}
+          <div className="p-6 md:p-10 flex flex-col justify-between">
+            <div>
+              {/* Header */}
+              <div className="flex flex-wrap items-center gap-3 mb-6">
+                <span className="font-mono text-xs text-muted tracking-wider">
+                  CASE / {data.num}
+                </span>
+                <span
+                  className="px-2.5 py-1 rounded text-xs font-mono font-medium"
                   style={{
-                    paddingRight: 16,
-                    borderRight: i < 2 ? "1px solid var(--border)" : "none",
-                    paddingLeft: i > 0 ? 20 : 0,
+                    backgroundColor: `${data.accent}15`,
+                    color: data.accent,
                   }}
                 >
-                  <div
-                    style={{
-                      fontSize: 32,
-                      fontWeight: 800,
-                      letterSpacing: "-0.03em",
-                      color: "var(--ink)",
-                      lineHeight: 1,
-                      fontFeatureSettings: '"tnum"',
-                    }}
-                  >
-                    {m.v}
+                  {data.chain}
+                </span>
+                <span className="text-sm text-muted">
+                  · Client: <strong className="text-navy">{data.client}</strong>
+                </span>
+              </div>
+
+              {/* Title */}
+              <h3 className="headline-md mb-3">{data.title}</h3>
+              <p className="text-lg font-medium text-navy mb-4 leading-snug">
+                {data.tagline}
+              </p>
+              <p className="body-md mb-8 max-w-lg">{data.desc}</p>
+
+              {/* Metrics */}
+              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-border mb-8">
+                {data.metrics.map((m, i) => (
+                  <div key={i}>
+                    <div
+                      className="font-display text-2xl md:text-3xl font-bold text-navy"
+                      style={{ fontFeatureSettings: '"tnum"' }}
+                    >
+                      {m.v}
+                    </div>
+                    <div className="font-mono text-[10px] text-muted tracking-wider mt-1">
+                      {m.u.toUpperCase()}
+                    </div>
                   </div>
-                  <div
-                    className="mono"
-                    style={{
-                      fontSize: 10,
-                      color: "var(--fg3)",
-                      letterSpacing: ".08em",
-                      marginTop: 6,
-                    }}
-                  >
-                    {m.u.toUpperCase()}
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              {/* Quote */}
+              <blockquote
+                className="p-4 rounded-r-xl border-l-2"
+                style={{
+                  borderColor: data.accent,
+                  backgroundColor: `${data.accent}08`,
+                }}
+              >
+                <p className="text-sm font-medium text-navy mb-2">
+                  {data.quote}
+                </p>
+                <cite className="text-xs font-mono text-muted not-italic">
+                  {data.quoteBy}
+                </cite>
+              </blockquote>
             </div>
 
-            <blockquote
-              style={{
-                margin: 0,
-                padding: "18px 22px",
-                borderLeft: `3px solid ${data.accent}`,
-                background: "var(--bg-tint)",
-                borderRadius: "0 8px 8px 0",
-              }}
-            >
-              <p
-                style={{
-                  fontSize: 15,
-                  lineHeight: 1.5,
-                  color: "var(--ink)",
-                  margin: "0 0 8px",
-                  fontWeight: 500,
-                }}
-              >
-                {data.quote}
-              </p>
-              <cite
-                style={{
-                  fontSize: 11.5,
-                  color: "var(--fg3)",
-                  fontStyle: "normal",
-                  fontFamily: "JetBrains Mono, monospace",
-                  letterSpacing: ".02em",
-                }}
-              >
-                {data.quoteBy}
-              </cite>
-            </blockquote>
+            {/* CTA */}
+            <div className="mt-8">
+              <a href="#" className="btn btn-tertiary">
+                Read case study
+                <svg
+                  className="w-4 h-4"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                >
+                  <path d="M3 8h10M9 4l4 4-4 4" />
+                </svg>
+              </a>
+            </div>
           </div>
 
-          <div style={{ marginTop: 32 }}>
-            <a
-              href="#"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 10,
-                color: "var(--ink)",
-                fontWeight: 600,
-                fontSize: 14,
-                borderBottom: "1px solid var(--ink)",
-                paddingBottom: 4,
-              }}
-            >
-              Read case study
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <path d="M3 8h10M9 4l4 4-4 4" />
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <div
-          style={{
-            order: flip ? 1 : 2,
-            background: `linear-gradient(135deg, ${data.accent}12 0%, ${data.accent}04 100%)`,
-            borderLeft: flip ? "none" : "1px solid var(--border)",
-            borderRight: flip ? "1px solid var(--border)" : "none",
-            padding: 48,
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
-          }}
-        >
+          {/* Visual */}
           <div
-            className="pattern-optional"
+            className="relative p-8 md:p-12 flex items-center justify-center border-t lg:border-t-0 border-border overflow-hidden"
             style={{
-              position: "absolute",
-              inset: 0,
-              opacity: 0.4,
-              backgroundImage: `linear-gradient(${data.accent}10 1px, transparent 1px), linear-gradient(90deg, ${data.accent}10 1px, transparent 1px)`,
-              backgroundSize: "32px 32px",
+              background: `linear-gradient(135deg, ${data.accent}08 0%, ${data.accent}02 100%)`,
+              borderLeft: flip ? "none" : undefined,
+              borderRight: flip ? undefined : "none",
             }}
-          />
-          <CaseMockup type={data.mock} accent={data.accent} />
+          >
+            {/* Grid pattern */}
+            <div
+              className="absolute inset-0 opacity-30"
+              style={{
+                backgroundImage: `linear-gradient(${data.accent}12 1px, transparent 1px), linear-gradient(90deg, ${data.accent}12 1px, transparent 1px)`,
+                backgroundSize: "32px 32px",
+              }}
+            />
+            <CaseMockup type={data.mock} accent={data.accent} />
+          </div>
         </div>
       </article>
-    </div>
+    </motion.div>
   );
 }
 
-function CaseMockup({ type, accent }: { type: CaseData["mock"]; accent: string }) {
+function CaseMockup({
+  type,
+  accent,
+}: {
+  type: CaseData["mock"];
+  accent: string;
+}) {
   if (type === "dashboard") return <DashboardMock accent={accent} />;
   if (type === "bridge") return <BridgeMock accent={accent} />;
   if (type === "mobile") return <MobileMock accent={accent} />;
@@ -341,81 +289,58 @@ function CaseMockup({ type, accent }: { type: CaseData["mock"]; accent: string }
 function DashboardMock({ accent }: { accent: string }) {
   return (
     <div
+      className="w-full max-w-[480px] rounded-2xl overflow-hidden shadow-2xl"
       style={{
-        width: "100%",
-        maxWidth: 540,
-        background: "#0a1628",
-        borderRadius: 14,
-        boxShadow: "0 30px 60px -15px rgba(10,41,87,.3)",
-        overflow: "hidden",
-        position: "relative",
+        background: "linear-gradient(180deg, #1A1A2E 0%, #282850 100%)",
         transform: "perspective(2000px) rotateY(-3deg)",
       }}
     >
-      <div
-        style={{
-          padding: "10px 14px",
-          background: "#061220",
-          borderBottom: "1px solid rgba(255,255,255,.08)",
-          display: "flex",
-          gap: 6,
-        }}
-      >
-        <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#ff5f57" }} />
-        <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#febc2e" }} />
-        <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#28c840" }} />
-        <div
-          className="mono"
-          style={{ flex: 1, textAlign: "center", fontSize: 10, color: "rgba(255,255,255,.35)" }}
-        >
+      {/* Title bar */}
+      <div className="flex items-center gap-2 px-4 py-3 bg-navy-deep border-b border-white/10">
+        <div className="flex gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+        </div>
+        <div className="flex-1 font-mono text-[10px] text-white/30 text-center">
           surflux.buidly.dev
         </div>
       </div>
-      <div style={{ padding: 18 }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: 14,
-          }}
-        >
+
+      <div className="p-4">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-4">
           <div>
-            <div
-              className="mono"
-              style={{
-                fontSize: 9,
-                color: "rgba(255,255,255,.4)",
-                letterSpacing: ".08em",
-                marginBottom: 3,
-              }}
-            >
+            <div className="font-mono text-[9px] text-white/40 tracking-wider mb-1">
               FLUX STREAM / MAINNET
             </div>
-            <div style={{ fontSize: 14, fontWeight: 600, color: "#fff" }}>DeepBook events</div>
+            <div className="text-sm font-semibold text-white">DeepBook events</div>
           </div>
-          <div className="mono" style={{ fontSize: 10, color: accent }}>
-            ●  live · 2,481 ev/s
+          <div className="font-mono text-[10px]" style={{ color: accent }}>
+            <span className="inline-block w-1.5 h-1.5 rounded-full mr-1" style={{ backgroundColor: accent }} />
+            live · 2,481 ev/s
           </div>
         </div>
 
-        <div style={{ height: 120, display: "flex", alignItems: "end", gap: 2, marginBottom: 14 }}>
-          {[32, 38, 30, 42, 50, 44, 52, 58, 48, 60, 68, 62, 72, 80, 74, 84, 92, 86, 96, 104, 98, 108, 116, 110, 120, 128].map(
-            (h, i) => (
+        {/* Chart */}
+        <div className="h-24 flex items-end gap-0.5 mb-4">
+          {Array.from({ length: 26 }).map((_, i) => {
+            const h = 30 + Math.sin(i * 0.4) * 20 + i * 3;
+            return (
               <div
                 key={i}
+                className="flex-1 rounded-sm"
                 style={{
-                  flex: 1,
-                  height: `${(h / 128) * 100}%`,
-                  background: `linear-gradient(180deg, ${accent}, ${accent}33)`,
-                  borderRadius: 1,
+                  height: `${Math.min(h, 100)}%`,
+                  background: `linear-gradient(180deg, ${accent} 0%, ${accent}33 100%)`,
                 }}
               />
-            )
-          )}
+            );
+          })}
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
+        {/* Metrics */}
+        <div className="grid grid-cols-3 gap-2 mb-3">
           {[
             { l: "Indexed 24h", v: "12.4M" },
             { l: "Subscribers", v: "847" },
@@ -423,49 +348,25 @@ function DashboardMock({ accent }: { accent: string }) {
           ].map((m, i) => (
             <div
               key={i}
-              style={{
-                background: "rgba(255,255,255,.04)",
-                padding: 10,
-                borderRadius: 6,
-                border: "1px solid rgba(255,255,255,.05)",
-              }}
+              className="p-2.5 rounded-lg bg-white/5 border border-white/5"
             >
-              <div
-                className="mono"
-                style={{
-                  fontSize: 8.5,
-                  color: "rgba(255,255,255,.35)",
-                  letterSpacing: ".1em",
-                  marginBottom: 3,
-                }}
-              >
+              <div className="font-mono text-[8px] text-white/40 tracking-wider mb-1">
                 {m.l.toUpperCase()}
               </div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: "#fff", letterSpacing: "-0.02em" }}>
-                {m.v}
-              </div>
+              <div className="text-sm font-bold text-white">{m.v}</div>
             </div>
           ))}
         </div>
 
-        <div
-          style={{
-            marginTop: 12,
-            padding: 10,
-            background: "rgba(0,0,0,.3)",
-            borderRadius: 6,
-            fontFamily: "JetBrains Mono, monospace",
-            fontSize: 10,
-            lineHeight: 1.6,
-          }}
-        >
-          <div style={{ color: "rgba(255,255,255,.35)" }}>
+        {/* Terminal */}
+        <div className="p-3 rounded-lg bg-black/40 font-mono text-[10px] leading-relaxed">
+          <div className="text-white/30">
             [14:32:04] <span style={{ color: accent }}>tx 0x4f..8ea</span> order_filled 2,840 SUI
           </div>
-          <div style={{ color: "rgba(255,255,255,.35)" }}>
+          <div className="text-white/30">
             [14:32:04] <span style={{ color: accent }}>tx 0x7b..2cd</span> pool_created USDC/SUI
           </div>
-          <div style={{ color: "rgba(255,255,255,.35)" }}>
+          <div className="text-white/30">
             [14:32:05] <span style={{ color: accent }}>tx 0x91..4fa</span> liquidity_added 14k
           </div>
         </div>
@@ -477,160 +378,68 @@ function DashboardMock({ accent }: { accent: string }) {
 function BridgeMock({ accent }: { accent: string }) {
   return (
     <div
-      style={{
-        width: "100%",
-        maxWidth: 480,
-        background: "#fff",
-        borderRadius: 16,
-        boxShadow: "0 30px 60px -15px rgba(10,41,87,.25)",
-        border: "1px solid var(--border)",
-        overflow: "hidden",
-        transform: "perspective(2000px) rotateY(3deg)",
-      }}
+      className="w-full max-w-[400px] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+      style={{ transform: "perspective(2000px) rotateY(3deg)" }}
     >
-      <div
-        style={{
-          padding: "14px 18px",
-          borderBottom: "1px solid var(--border)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ fontSize: 15, fontWeight: 700, color: "var(--ink)", letterSpacing: "-0.02em" }}>
-          OneFinity Bridge
-        </div>
-        <span className="mono" style={{ fontSize: 10, color: accent }}>
-          ●  Mainnet
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+        <div className="font-display font-semibold text-navy">OneFinity Bridge</div>
+        <span className="font-mono text-[10px]" style={{ color: accent }}>
+          <span className="inline-block w-1.5 h-1.5 rounded-full mr-1" style={{ backgroundColor: accent }} />
+          Mainnet
         </span>
       </div>
 
-      <div style={{ padding: 22 }}>
-        <div
-          className="mono"
-          style={{ fontSize: 10, color: "var(--fg3)", letterSpacing: ".1em", marginBottom: 10 }}
-        >
-          FROM
-        </div>
-        <div
-          style={{
-            background: "var(--bg-tint)",
-            borderRadius: 10,
-            padding: 14,
-            marginBottom: 10,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+      <div className="p-5">
+        {/* From */}
+        <div className="font-mono text-[10px] text-muted tracking-wider mb-2">FROM</div>
+        <div className="flex items-center justify-between p-4 bg-background rounded-xl mb-3">
           <div>
-            <div style={{ fontSize: 13, color: "var(--fg3)", marginBottom: 4 }}>MultiversX</div>
-            <div style={{ fontSize: 24, fontWeight: 700, color: "var(--ink)", letterSpacing: "-0.02em" }}>
-              2,480.00
-            </div>
+            <div className="text-sm text-muted mb-1">MultiversX</div>
+            <div className="font-display text-2xl font-bold text-navy">2,480.00</div>
           </div>
-          <div
-            style={{
-              background: "#fff",
-              padding: "8px 12px",
-              borderRadius: 8,
-              border: "1px solid var(--border)",
-              fontSize: 13,
-              fontWeight: 600,
-            }}
-          >
+          <div className="px-3 py-2 bg-white border border-border rounded-lg font-semibold text-sm">
             EGLD
           </div>
         </div>
 
-        <div style={{ textAlign: "center", margin: "10px 0" }}>
+        {/* Arrow */}
+        <div className="text-center my-3">
           <div
-            style={{
-              display: "inline-flex",
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              background: accent,
-              color: "#fff",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            className="inline-flex w-10 h-10 rounded-full items-center justify-center text-white"
+            style={{ backgroundColor: accent }}
           >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="2">
               <path d="M8 2v12M3 9l5 5 5-5" />
             </svg>
           </div>
         </div>
 
-        <div
-          className="mono"
-          style={{ fontSize: 10, color: "var(--fg3)", letterSpacing: ".1em", marginBottom: 10 }}
-        >
-          TO
-        </div>
-        <div
-          style={{
-            background: "var(--bg-tint)",
-            borderRadius: 10,
-            padding: 14,
-            marginBottom: 18,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+        {/* To */}
+        <div className="font-mono text-[10px] text-muted tracking-wider mb-2">TO</div>
+        <div className="flex items-center justify-between p-4 bg-background rounded-xl mb-4">
           <div>
-            <div style={{ fontSize: 13, color: "var(--fg3)", marginBottom: 4 }}>Ethereum</div>
-            <div style={{ fontSize: 24, fontWeight: 700, color: "var(--ink)", letterSpacing: "-0.02em" }}>
-              28.4127
-            </div>
+            <div className="text-sm text-muted mb-1">Ethereum</div>
+            <div className="font-display text-2xl font-bold text-navy">28.4127</div>
           </div>
-          <div
-            style={{
-              background: "#fff",
-              padding: "8px 12px",
-              borderRadius: 8,
-              border: "1px solid var(--border)",
-              fontSize: 13,
-              fontWeight: 600,
-            }}
-          >
+          <div className="px-3 py-2 bg-white border border-border rounded-lg font-semibold text-sm">
             ETH
           </div>
         </div>
 
-        <div
-          style={{
-            background: "var(--bg-tint)",
-            borderRadius: 8,
-            padding: 12,
-            fontSize: 11,
-            color: "var(--fg3)",
-            marginBottom: 14,
-            display: "grid",
-            gridTemplateColumns: "1fr auto",
-            rowGap: 4,
-          }}
-        >
-          <span>Network fee</span>
-          <span style={{ color: "var(--ink)", fontWeight: 500 }}>€1.84</span>
-          <span>Bridge time</span>
-          <span style={{ color: "var(--ink)", fontWeight: 500 }}>~ 4m 20s</span>
-          <span>Route audit</span>
-          <span style={{ color: "var(--green)", fontWeight: 500 }}>✓ Verified</span>
+        {/* Details */}
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2 p-3 bg-background rounded-lg text-sm mb-4">
+          <span className="text-muted">Network fee</span>
+          <span className="text-right font-medium text-navy">€1.84</span>
+          <span className="text-muted">Bridge time</span>
+          <span className="text-right font-medium text-navy">~ 4m 20s</span>
+          <span className="text-muted">Route audit</span>
+          <span className="text-right font-medium text-[#28c840]">Verified</span>
         </div>
 
         <button
-          style={{
-            width: "100%",
-            height: 48,
-            border: 0,
-            borderRadius: 10,
-            background: accent,
-            color: "#fff",
-            fontWeight: 600,
-            fontSize: 14,
-          }}
+          className="w-full h-12 rounded-xl font-semibold text-white"
+          style={{ backgroundColor: accent }}
         >
           Bridge assets
         </button>
@@ -641,199 +450,60 @@ function BridgeMock({ accent }: { accent: string }) {
 
 function MobileMock({ accent }: { accent: string }) {
   return (
-    <div style={{ display: "flex", gap: 20, alignItems: "center", justifyContent: "center" }}>
-      <div
-        style={{
-          width: 240,
-          height: 480,
-          background: "#000",
-          borderRadius: 38,
-          padding: 6,
-          boxShadow: "0 30px 60px -15px rgba(10,41,87,.35)",
-          border: "1px solid rgba(0,0,0,.5)",
-          transform: "perspective(2000px) rotateY(-6deg)",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            borderRadius: 32,
-            overflow: "hidden",
-            background: `linear-gradient(180deg, ${accent}22, #0a1628)`,
-            position: "relative",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: 10,
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: 80,
-              height: 22,
-              background: "#000",
-              borderRadius: 14,
-              zIndex: 2,
-            }}
-          />
-          <div style={{ padding: "44px 20px 20px" }}>
-            <div
-              className="mono"
-              style={{
-                fontSize: 9,
-                color: "rgba(255,255,255,.5)",
-                letterSpacing: ".1em",
-                marginBottom: 6,
-              }}
-            >
-              POPKINS DROP
-            </div>
-            <div
-              style={{
-                fontSize: 22,
-                fontWeight: 800,
-                color: "#fff",
-                letterSpacing: "-0.03em",
-                lineHeight: 1,
-                marginBottom: 14,
-              }}
-            >
-              Claim your
-              <br />
-              Claynosaur.
-            </div>
-            <div
-              style={{
-                aspectRatio: "1",
-                borderRadius: 16,
-                background: `linear-gradient(135deg, ${accent}, #0a1628)`,
-                marginBottom: 14,
-                position: "relative",
-                overflow: "hidden",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <svg width="80%" height="80%" viewBox="0 0 100 100" fill="none">
-                <circle cx="50" cy="40" r="18" fill="#fff" fillOpacity=".8" />
-                <ellipse cx="50" cy="75" rx="32" ry="14" fill="#fff" fillOpacity=".6" />
-                <circle cx="44" cy="38" r="3" fill="#000" />
-                <circle cx="56" cy="38" r="3" fill="#000" />
-              </svg>
-              <div
-                style={{
-                  position: "absolute",
-                  top: 10,
-                  right: 10,
-                  background: "rgba(0,0,0,.4)",
-                  backdropFilter: "blur(8px)",
-                  padding: "4px 8px",
-                  borderRadius: 6,
-                  fontSize: 10,
-                  color: "#fff",
-                  fontFamily: "JetBrains Mono, monospace",
-                }}
-              >
-                #4821 / 10k
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: 14,
-                fontSize: 11,
-                color: "rgba(255,255,255,.7)",
-              }}
-            >
-              <div>
-                <div
-                  style={{
-                    fontSize: 9,
-                    opacity: 0.6,
-                    fontFamily: "JetBrains Mono, monospace",
-                    letterSpacing: ".08em",
-                  }}
-                >
-                  PRICE
-                </div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>2.4 SOL</div>
-              </div>
-              <div>
-                <div
-                  style={{
-                    fontSize: 9,
-                    opacity: 0.6,
-                    fontFamily: "JetBrains Mono, monospace",
-                    letterSpacing: ".08em",
-                  }}
-                >
-                  QUEUE
-                </div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>#142 / 180k</div>
-              </div>
-            </div>
-            <button
-              style={{
-                width: "100%",
-                height: 44,
-                border: 0,
-                borderRadius: 12,
-                background: accent,
-                color: "#0a1628",
-                fontWeight: 700,
-                fontSize: 13,
-              }}
-            >
-              Mint now
-            </button>
+    <div
+      className="relative w-[260px] h-[500px] rounded-[40px] overflow-hidden shadow-2xl"
+      style={{
+        background: "linear-gradient(180deg, #1A1A2E 0%, #282850 100%)",
+        transform: "perspective(2000px) rotateY(-5deg)",
+      }}
+    >
+      {/* Notch */}
+      <div className="absolute top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full" />
+
+      {/* Content */}
+      <div className="pt-12 px-5">
+        {/* Status */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="font-mono text-[9px] text-white/40">MINT / POPKINS</div>
+          <div className="font-mono text-[10px]" style={{ color: accent }}>
+            <span className="inline-block w-1.5 h-1.5 rounded-full mr-1 animate-pulse" style={{ backgroundColor: accent }} />
+            LIVE
           </div>
         </div>
-      </div>
 
-      <div className="mobile-widgets" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        {[
-          { l: "CONCURRENT", v: "180,432", c: accent },
-          { l: "MINTED 24H", v: "9,847", c: "#4db8ff" },
-          { l: "AVG SETTLE", v: "12s", c: "#17b26a" },
-        ].map((w, i) => (
-          <div
-            key={i}
-            style={{
-              background: "#fff",
-              padding: "14px 18px",
-              borderRadius: 12,
-              border: "1px solid var(--border)",
-              boxShadow: "0 8px 20px -8px rgba(10,41,87,.1)",
-              minWidth: 140,
-            }}
-          >
-            <div
-              className="mono"
-              style={{
-                fontSize: 9,
-                color: "var(--fg3)",
-                letterSpacing: ".12em",
-                marginBottom: 5,
-              }}
-            >
-              {w.l}
-            </div>
-            <div
-              style={{
-                fontSize: 22,
-                fontWeight: 800,
-                letterSpacing: "-0.03em",
-                color: w.c,
-                fontFeatureSettings: '"tnum"',
-              }}
-            >
-              {w.v}
-            </div>
+        {/* Image placeholder */}
+        <div
+          className="w-full aspect-square rounded-2xl mb-4 flex items-center justify-center"
+          style={{ background: `linear-gradient(135deg, ${accent}20, ${accent}05)` }}
+        >
+          <div className="w-20 h-20 rounded-2xl bg-white/10 border border-white/20" />
+        </div>
+
+        {/* Info */}
+        <div className="text-center mb-4">
+          <div className="text-lg font-bold text-white mb-1">Popkin #4,821</div>
+          <div className="font-mono text-xs text-white/50">0.42 SOL</div>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 gap-2 mb-4">
+          <div className="p-3 rounded-xl bg-white/5 text-center">
+            <div className="font-mono text-[9px] text-white/40 mb-1">MINTED</div>
+            <div className="text-sm font-bold text-white">8,421 / 10k</div>
           </div>
-        ))}
+          <div className="p-3 rounded-xl bg-white/5 text-center">
+            <div className="font-mono text-[9px] text-white/40 mb-1">QUEUE</div>
+            <div className="text-sm font-bold text-white">2,841</div>
+          </div>
+        </div>
+
+        {/* Button */}
+        <button
+          className="w-full h-12 rounded-xl font-bold text-white"
+          style={{ backgroundColor: accent }}
+        >
+          Mint Now
+        </button>
       </div>
     </div>
   );

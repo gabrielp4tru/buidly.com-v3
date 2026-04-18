@@ -1,82 +1,79 @@
 "use client";
 
-import BuidlyMark from "./BuidlyMark";
+import { useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 export function CTA() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const slots = [
+    { day: "TUE", date: "22", month: "Apr", time: "14:00 - 14:30 CEST", open: true },
+    { day: "WED", date: "23", month: "Apr", time: "10:30 - 11:00 CEST", open: true },
+    { day: "THU", date: "24", month: "Apr", time: "16:00 - 16:30 CEST", open: true },
+    { day: "FRI", date: "25", month: "Apr", time: "Fully booked", open: false },
+  ];
+
   return (
     <section
+      ref={sectionRef}
       id="cta"
-      style={{
-        background: "linear-gradient(180deg, #061b39 0%, #03142d 100%)",
-        color: "#fff",
-        padding: "120px 0 100px",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      className="relative py-20 md:py-28 overflow-hidden"
     >
-      <div className="blueprint-dark pattern-optional" style={{ position: "absolute", inset: 0, opacity: 0.7 }} />
-      <div
-        style={{
-          position: "absolute",
-          top: "-30%",
-          left: "-10%",
-          width: "70%",
-          height: "120%",
-          background: "radial-gradient(ellipse at center, rgba(11,128,239,.28) 0%, transparent 55%)",
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: "-30%",
-          right: "-10%",
-          width: "60%",
-          height: "90%",
-          background: "radial-gradient(ellipse at center, rgba(232,70,90,.14) 0%, transparent 55%)",
-          pointerEvents: "none",
-        }}
-      />
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-deep via-navy to-navy-deep" />
+      <div className="absolute inset-0 bg-grid-dark opacity-30" />
 
-      <div className="wrap-wide" style={{ position: "relative" }}>
-        <div
-          className="cta-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.3fr 1fr",
-            gap: 80,
-            alignItems: "center",
-          }}
-        >
-          <div>
-            <div className="chip on-dark" style={{ marginBottom: 28 }}>
+      {/* Gradient orbs */}
+      <div className="absolute top-[-30%] left-[-10%] w-[70%] h-[120%] bg-[radial-gradient(ellipse_at_center,rgba(1,200,240,0.15)_0%,transparent_55%)] pointer-events-none" />
+      <div className="absolute bottom-[-30%] right-[-10%] w-[60%] h-[90%] bg-[radial-gradient(ellipse_at_center,rgba(1,152,255,0.15)_0%,transparent_55%)] pointer-events-none" />
+
+      <div className="container relative">
+        <div className="grid lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-20 items-center">
+          {/* Left content */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="chip mb-6">
               <span className="dot" />
-              1 Q2 slot remaining · replies within 24h
+              1 Q2 slot remaining
             </div>
 
-            <h2 className="display" style={{ color: "#fff", marginTop: 0, marginBottom: 28 }}>
+            <h2 className="font-display font-bold text-white leading-tight mb-6"
+              style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+            >
               Let&apos;s figure out
               <br />
-              if we&apos;re a <span className="italic" style={{ color: "var(--blue-bright)" }}>fit.</span>
+              if we&apos;re a <span className="text-gradient">fit.</span>
             </h2>
 
-            <p
-              style={{
-                fontSize: 19,
-                lineHeight: 1.55,
-                color: "rgba(255,255,255,.7)",
-                maxWidth: 560,
-                marginBottom: 40,
-              }}
-            >
-              30 minutes, free, no sales pitch. You describe the problem. We tell you how we&apos;d approach it, what it costs, and when it ships — whether you hire us or not.
+            <p className="text-lg text-white/60 max-w-xl mb-8 leading-relaxed">
+              30 minutes, free, no sales pitch. You describe the problem. We tell
+              you how we&apos;d approach it, what it costs, and when it ships —
+              whether you hire us or not.
             </p>
 
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 56 }}>
-              <a href="#" className="btn btn-dark">
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-3 mb-10">
+              <a href="#" className="btn btn-primary pulse-glow">
                 Book a free 30-min call
                 <svg
-                  className="arrow"
+                  className="w-4 h-4"
                   viewBox="0 0 16 16"
                   fill="none"
                   stroke="currentColor"
@@ -85,219 +82,146 @@ export function CTA() {
                   <path d="M3 8h10M9 4l4 4-4 4" />
                 </svg>
               </a>
-              <a href="mailto:hello@buidly.com" className="btn btn-on-dark">
+              <a
+                href="mailto:hello@buidly.com"
+                className="btn btn-secondary border-white/20 text-white hover:border-cyan hover:bg-cyan/10"
+              >
                 hello@buidly.com
               </a>
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: 0,
-                borderTop: "1px solid rgba(255,255,255,.12)",
-                paddingTop: 28,
-                maxWidth: 520,
-              }}
-            >
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-white/10 max-w-lg">
               {[
-                { k: "Response", v: "< 24h" },
-                { k: "First call", v: "Free" },
-                { k: "Locked scope", v: "48h" },
-              ].map((m, i) => (
+                { label: "Response", value: "< 24h" },
+                { label: "First call", value: "Free" },
+                { label: "Locked scope", value: "48h" },
+              ].map((item, idx) => (
                 <div
-                  key={i}
-                  style={{
-                    paddingRight: 20,
-                    borderRight: i < 2 ? "1px solid rgba(255,255,255,.08)" : "none",
-                    paddingLeft: i > 0 ? 20 : 0,
-                  }}
+                  key={idx}
+                  className={`${idx < 2 ? "border-r border-white/10 pr-4" : ""} ${
+                    idx > 0 ? "pl-4" : ""
+                  }`}
                 >
-                  <div
-                    className="mono"
-                    style={{
-                      fontSize: 10.5,
-                      color: "rgba(255,255,255,.45)",
-                      letterSpacing: ".12em",
-                      marginBottom: 6,
-                    }}
-                  >
-                    {m.k.toUpperCase()}
+                  <div className="font-mono text-[10px] text-white/40 tracking-wider mb-1">
+                    {item.label.toUpperCase()}
                   </div>
-                  <div style={{ fontSize: 20, fontWeight: 700, color: "#fff" }}>{m.v}</div>
+                  <div className="font-display text-xl font-bold text-white">
+                    {item.value}
+                  </div>
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div
-            style={{
-              background: "rgba(255,255,255,.04)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              border: "1px solid rgba(255,255,255,.12)",
-              borderRadius: 20,
-              padding: 32,
-              boxShadow: "0 30px 80px -20px rgba(0,0,0,.5)",
-            }}
+          {/* Right - Calendar card */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 22,
-              }}
-            >
-              <div
-                className="mono"
-                style={{ fontSize: 10, color: "rgba(255,255,255,.5)", letterSpacing: ".15em" }}
-              >
-                NEXT AVAILABLE
+            <div className="glass-dark rounded-3xl p-6 md:p-8 border border-white/10 shadow-2xl">
+              <div className="flex items-center justify-between mb-6">
+                <div className="font-mono text-xs text-white/40 tracking-wider">
+                  NEXT AVAILABLE
+                </div>
+                <div className="flex items-center gap-2 font-mono text-xs text-cyan">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan"></span>
+                  </span>
+                  3 slots this week
+                </div>
               </div>
-              <span
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                  fontSize: 11,
-                  color: "var(--blue-bright)",
-                  fontFamily: "JetBrains Mono, monospace",
-                }}
-              >
-                <span
-                  style={{
-                    width: 7,
-                    height: 7,
-                    borderRadius: "50%",
-                    background: "var(--green)",
-                    boxShadow: "0 0 0 3px rgba(23,178,106,.2)",
-                  }}
-                />
-                3 slots this week
-              </span>
-            </div>
 
-            {[
-              { day: "TUE", date: "22", month: "Apr", time: "14:00 — 14:30 CEST", open: true },
-              { day: "WED", date: "23", month: "Apr", time: "10:30 — 11:00 CEST", open: true },
-              { day: "THU", date: "24", month: "Apr", time: "16:00 — 16:30 CEST", open: true },
-              { day: "FRI", date: "25", month: "Apr", time: "Fully booked", open: false },
-            ].map((s, i) => (
-              <div
-                key={i}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 16,
-                  padding: "14px 16px",
-                  background: s.open ? "rgba(255,255,255,.02)" : "transparent",
-                  border: "1px solid rgba(255,255,255,.06)",
-                  borderRadius: 10,
-                  marginBottom: 10,
-                  opacity: s.open ? 1 : 0.4,
-                  cursor: s.open ? "pointer" : "default",
-                  transition: "all .2s",
-                }}
-                onMouseEnter={(e) => {
-                  if (s.open) {
-                    e.currentTarget.style.borderColor = "var(--blue-bright)";
-                    e.currentTarget.style.background = "rgba(77,184,255,.06)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (s.open) {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,.06)";
-                    e.currentTarget.style.background = "rgba(255,255,255,.02)";
-                  }
-                }}
-              >
-                <div
-                  style={{
-                    width: 48,
-                    textAlign: "center",
-                    background: s.open ? "rgba(255,255,255,.06)" : "transparent",
-                    border: "1px solid rgba(255,255,255,.08)",
-                    borderRadius: 8,
-                    padding: "6px 0",
-                  }}
-                >
-                  <div
-                    className="mono"
-                    style={{ fontSize: 9, color: "rgba(255,255,255,.5)", letterSpacing: ".1em" }}
+              <div className="space-y-3">
+                {slots.map((slot, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={isVisible ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.4, delay: 0.3 + idx * 0.1 }}
+                    className={`flex items-center gap-4 p-4 rounded-xl border transition-all duration-300 ${
+                      slot.open
+                        ? "bg-white/5 border-white/10 hover:border-cyan hover:bg-cyan/5 cursor-pointer"
+                        : "border-white/5 opacity-40"
+                    }`}
                   >
-                    {s.day}
-                  </div>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: "#fff", lineHeight: 1 }}>
-                    {s.date}
-                  </div>
-                  <div
-                    className="mono"
-                    style={{ fontSize: 9, color: "rgba(255,255,255,.4)", marginTop: 1 }}
-                  >
-                    {s.month}
-                  </div>
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, color: "#fff", fontWeight: 500, marginBottom: 2 }}>
-                    Discovery call
-                  </div>
-                  <div className="mono" style={{ fontSize: 11, color: "rgba(255,255,255,.5)" }}>
-                    {s.time}
-                  </div>
-                </div>
-                {s.open && (
+                    {/* Date */}
+                    <div
+                      className={`w-12 text-center py-2 rounded-lg ${
+                        slot.open
+                          ? "bg-white/10 border border-white/10"
+                          : "bg-transparent"
+                      }`}
+                    >
+                      <div className="font-mono text-[9px] text-white/40">
+                        {slot.day}
+                      </div>
+                      <div className="font-display text-lg font-bold text-white leading-none">
+                        {slot.date}
+                      </div>
+                      <div className="font-mono text-[9px] text-white/30">
+                        {slot.month}
+                      </div>
+                    </div>
+
+                    {/* Info */}
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-white mb-1">
+                        Discovery call
+                      </div>
+                      <div className="font-mono text-xs text-white/50">
+                        {slot.time}
+                      </div>
+                    </div>
+
+                    {/* Arrow */}
+                    {slot.open && (
+                      <svg
+                        className="w-4 h-4 text-cyan"
+                        fill="none"
+                        viewBox="0 0 16 16"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                      >
+                        <path d="M3 8h10M9 4l4 4-4 4" />
+                      </svg>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Async note */}
+              <div className="mt-6 p-4 rounded-xl bg-cyan/10 border border-cyan/20">
+                <div className="flex gap-3 items-start text-sm text-white/70">
                   <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
+                    className="w-4 h-4 text-cyan flex-shrink-0 mt-0.5"
                     fill="none"
+                    viewBox="0 0 24 24"
                     stroke="currentColor"
-                    strokeWidth="1.5"
-                    style={{ color: "var(--blue-bright)" }}
+                    strokeWidth={2}
                   >
-                    <path d="M3 8h10M9 4l4 4-4 4" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
-                )}
+                  <span>
+                    Prefer async? Email{" "}
+                    <a
+                      href="mailto:hello@buidly.com"
+                      className="text-cyan hover:underline"
+                    >
+                      hello@buidly.com
+                    </a>{" "}
+                    with your brief.
+                  </span>
+                </div>
               </div>
-            ))}
-
-            <div
-              style={{
-                marginTop: 14,
-                padding: "10px 12px",
-                background: "rgba(77,184,255,.08)",
-                border: "1px solid rgba(77,184,255,.2)",
-                borderRadius: 8,
-                fontSize: 11.5,
-                color: "rgba(255,255,255,.7)",
-                display: "flex",
-                gap: 8,
-                alignItems: "start",
-              }}
-            >
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                style={{ flexShrink: 0, marginTop: 2 }}
-              >
-                <circle cx="6" cy="6" r="5.5" stroke="var(--blue-bright)" />
-                <path
-                  d="M6 3v4M6 9v.01"
-                  stroke="var(--blue-bright)"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-              Prefer async? Email{" "}
-              <a href="mailto:hello@buidly.com" style={{ color: "var(--blue-bright)", textDecoration: "underline" }}>
-                hello@buidly.com
-              </a>{" "}
-              with your brief.
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -305,83 +229,63 @@ export function CTA() {
 }
 
 export function Footer() {
-  const columns: { h: string; items: string[] }[] = [
-    { h: "Services", items: ["MVP & Launch", "Custom Apps", "SaaS", "AI Integration", "Web3"] },
-    { h: "Work", items: ["Surflux", "OneFinity", "Claynosaurz", "All projects"] },
-    { h: "Company", items: ["About", "Team", "Process", "Pricing", "Journal"] },
-    { h: "Get in touch", items: ["hello@buidly.com", "Book a call", "LinkedIn", "Twitter"] },
+  const columns = [
+    {
+      title: "Services",
+      links: ["MVP & Launch", "Custom Apps", "SaaS", "AI Integration", "Web3"],
+    },
+    {
+      title: "Work",
+      links: ["Surflux", "OneFinity", "Claynosaurz", "All projects"],
+    },
+    {
+      title: "Company",
+      links: ["About", "Team", "Process", "Pricing", "Journal"],
+    },
+    {
+      title: "Get in touch",
+      links: ["hello@buidly.com", "Book a call", "LinkedIn", "Twitter"],
+    },
   ];
 
   return (
-    <footer
-      style={{
-        background: "#03142d",
-        color: "rgba(255,255,255,.6)",
-        borderTop: "1px solid rgba(255,255,255,.08)",
-        padding: "56px 0 32px",
-      }}
-    >
-      <div className="wrap-wide">
-        <div
-          className="footer-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.5fr 1fr 1fr 1fr 1fr",
-            gap: 40,
-            marginBottom: 48,
-          }}
-        >
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-              <BuidlyMark size={28} />
-              <span
-                style={{
-                  fontWeight: 800,
-                  fontSize: 18,
-                  color: "#fff",
-                  letterSpacing: "-0.03em",
-                }}
-              >
-                buidly
-              </span>
+    <footer className="bg-navy-deep border-t border-white/10 py-16">
+      <div className="container">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-12 mb-12">
+          {/* Logo section */}
+          <div className="col-span-2 md:col-span-3 lg:col-span-2">
+            <div className="flex items-center gap-3 mb-4">
+              <Image
+                src="/buidly-logo.svg"
+                alt="Buidly"
+                width={100}
+                height={28}
+                className="h-7 w-auto brightness-0 invert"
+              />
             </div>
-            <p
-              style={{
-                fontSize: 13,
-                lineHeight: 1.6,
-                color: "rgba(255,255,255,.5)",
-                maxWidth: 280,
-                margin: "0 0 18px",
-              }}
-            >
-              Senior engineering studio. Web, mobile, SaaS, AI, Web3. Built to last. Shipped in weeks.
+            <p className="text-sm text-white/50 leading-relaxed max-w-xs mb-4">
+              Senior engineering studio. Web, mobile, SaaS, AI, Web3. Built to
+              last. Shipped in weeks.
             </p>
-            <div
-              className="mono"
-              style={{ fontSize: 11, color: "rgba(255,255,255,.4)", letterSpacing: ".1em" }}
-            >
-              BUCHAREST · LISBON · REMOTE
+            <div className="font-mono text-xs text-white/30 tracking-wider">
+              BERLIN · BUCHAREST · LISBON
             </div>
           </div>
 
-          {columns.map((col) => (
-            <div key={col.h}>
-              <div
-                className="mono"
-                style={{
-                  fontSize: 10.5,
-                  color: "rgba(255,255,255,.4)",
-                  letterSpacing: ".14em",
-                  marginBottom: 16,
-                }}
-              >
-                {col.h.toUpperCase()}
+          {/* Link columns */}
+          {columns.map((col, idx) => (
+            <div key={idx}>
+              <div className="font-mono text-[10px] text-white/40 tracking-wider mb-4">
+                {col.title.toUpperCase()}
               </div>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                {col.items.map((x) => (
-                  <li key={x} style={{ marginBottom: 10 }}>
-                    <a href="#" style={{ fontSize: 13.5, color: "rgba(255,255,255,.7)" }}>
-                      {x}
+              <ul className="space-y-2.5">
+                {col.links.map((link, i) => (
+                  <li key={i}>
+                    <a
+                      href="#"
+                      className="text-sm text-white/60 hover:text-cyan transition-colors"
+                    >
+                      {link}
                     </a>
                   </li>
                 ))}
@@ -390,27 +294,21 @@ export function Footer() {
           ))}
         </div>
 
-        <div
-          style={{
-            borderTop: "1px solid rgba(255,255,255,.08)",
-            paddingTop: 24,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 16,
-          }}
-        >
-          <div
-            className="mono"
-            style={{ fontSize: 11, color: "rgba(255,255,255,.4)", letterSpacing: ".08em" }}
-          >
-            © 2020–2026 BUIDLY SRL · ALL RIGHTS RESERVED
+        {/* Bottom bar */}
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="font-mono text-xs text-white/30 tracking-wider">
+            © 2020-2026 BUIDLY SRL · ALL RIGHTS RESERVED
           </div>
-          <div style={{ display: "flex", gap: 24, fontSize: 12, color: "rgba(255,255,255,.5)" }}>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Imprint</a>
+          <div className="flex gap-6 text-sm text-white/50">
+            <a href="#" className="hover:text-cyan transition-colors">
+              Privacy
+            </a>
+            <a href="#" className="hover:text-cyan transition-colors">
+              Terms
+            </a>
+            <a href="#" className="hover:text-cyan transition-colors">
+              Imprint
+            </a>
           </div>
         </div>
       </div>
