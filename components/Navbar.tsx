@@ -9,18 +9,13 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
   }, [mobileOpen]);
 
   const navItems = ["Services", "Work", "Process", "About"];
@@ -28,26 +23,24 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        initial={{ y: -100 }}
+        initial={{ y: -80 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 right-0 z-50"
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          padding: scrolled ? "12px 0" : "20px 0",
-          background: scrolled ? "rgba(250, 250, 250, 0.9)" : "transparent",
-          backdropFilter: scrolled ? "blur(20px)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
-          borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
-          transition: "all 0.3s var(--ease)",
+          padding: scrolled ? "10px 0" : "16px 0",
+          background: scrolled ? "rgba(248, 248, 248, 0.92)" : "transparent",
+          backdropFilter: scrolled ? "blur(16px)" : "none",
+          borderBottom: scrolled ? "1px solid #e0e0e0" : "1px solid transparent",
         }}
       >
         <div className="container flex items-center justify-between">
           {/* Logo */}
-          <a href="#top" className="flex items-center gap-3">
-            <BuidlyMark size={36} />
+          <a href="#top" className="flex items-center gap-2.5">
+            <BuidlyMark size={32} />
             <span
-              className="font-display text-xl"
-              style={{ color: scrolled ? "var(--ink)" : "var(--white)" }}
+              className="font-display text-lg"
+              style={{ color: scrolled ? "#0a0a0a" : "#ffffff" }}
             >
               buidly
             </span>
@@ -59,20 +52,14 @@ export default function Navbar() {
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
-                style={{
-                  color: scrolled ? "var(--ink-secondary)" : "var(--white-dim)",
-                }}
+                className="px-4 py-2 text-sm font-medium rounded-md transition-colors"
+                style={{ color: scrolled ? "#5c5c5c" : "rgba(255,255,255,0.7)" }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = scrolled ? "var(--ink)" : "var(--white)";
-                  e.currentTarget.style.background = scrolled
-                    ? "var(--bg-warm)"
-                    : "rgba(255,255,255,0.1)";
+                  e.currentTarget.style.color = scrolled ? "#0a0a0a" : "#ffffff";
+                  e.currentTarget.style.background = scrolled ? "#f2f2f2" : "rgba(255,255,255,0.1)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = scrolled
-                    ? "var(--ink-secondary)"
-                    : "var(--white-dim)";
+                  e.currentTarget.style.color = scrolled ? "#5c5c5c" : "rgba(255,255,255,0.7)";
                   e.currentTarget.style.background = "transparent";
                 }}
               >
@@ -81,102 +68,84 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right side */}
-          <div className="flex items-center gap-4">
-            {/* Status indicator - desktop only */}
+          {/* Right */}
+          <div className="flex items-center gap-3">
+            {/* Status */}
             <div
-              className="hidden lg:flex items-center gap-2 mono text-xs"
-              style={{ color: scrolled ? "var(--ink-muted)" : "var(--white-muted)" }}
+              className="hidden lg:flex items-center gap-2 mono text-[11px]"
+              style={{ color: scrolled ? "#8c8c8c" : "rgba(255,255,255,0.5)" }}
             >
               <span className="dot" />
-              Accepting Q2 slots
+              Q2 slots
             </div>
 
-            {/* CTA button */}
+            {/* CTA */}
             <a
               href="#cta"
-              className="hidden sm:flex items-center gap-2 h-10 px-5 rounded-lg text-sm font-semibold transition-all"
+              className="hidden sm:flex items-center gap-2 h-9 px-4 rounded-md text-sm font-semibold transition-all"
               style={{
-                background: scrolled ? "var(--ink)" : "var(--white)",
-                color: scrolled ? "var(--white)" : "var(--ink)",
+                background: scrolled ? "#0a0a0a" : "#ffffff",
+                color: scrolled ? "#ffffff" : "#0a0a0a",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--electric)";
-                e.currentTarget.style.color = "var(--bg-dark)";
+                e.currentTarget.style.background = "#00d4ff";
+                e.currentTarget.style.color = "#0a0a0a";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = scrolled ? "var(--ink)" : "var(--white)";
-                e.currentTarget.style.color = scrolled ? "var(--white)" : "var(--ink)";
+                e.currentTarget.style.background = scrolled ? "#0a0a0a" : "#ffffff";
+                e.currentTarget.style.color = scrolled ? "#ffffff" : "#0a0a0a";
               }}
             >
               Book a call
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <path d="M3 8h10M9 4l4 4-4 4" />
-              </svg>
             </a>
 
-            {/* Mobile menu button */}
+            {/* Mobile toggle */}
             <button
-              className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+              className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-1"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
+              aria-label="Menu"
             >
               <motion.span
-                animate={{
-                  rotate: mobileOpen ? 45 : 0,
-                  y: mobileOpen ? 6 : 0,
-                }}
-                className="w-6 h-0.5 rounded-full"
-                style={{ background: scrolled ? "var(--ink)" : "var(--white)" }}
+                animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 5 : 0 }}
+                className="w-5 h-0.5 rounded-full"
+                style={{ background: scrolled ? "#0a0a0a" : "#ffffff" }}
               />
               <motion.span
                 animate={{ opacity: mobileOpen ? 0 : 1 }}
-                className="w-6 h-0.5 rounded-full"
-                style={{ background: scrolled ? "var(--ink)" : "var(--white)" }}
+                className="w-5 h-0.5 rounded-full"
+                style={{ background: scrolled ? "#0a0a0a" : "#ffffff" }}
               />
               <motion.span
-                animate={{
-                  rotate: mobileOpen ? -45 : 0,
-                  y: mobileOpen ? -6 : 0,
-                }}
-                className="w-6 h-0.5 rounded-full"
-                style={{ background: scrolled ? "var(--ink)" : "var(--white)" }}
+                animate={{ rotate: mobileOpen ? -45 : 0, y: mobileOpen ? -5 : 0 }}
+                className="w-5 h-0.5 rounded-full"
+                style={{ background: scrolled ? "#0a0a0a" : "#ffffff" }}
               />
             </button>
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile menu overlay */}
+      {/* Mobile overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 md:hidden"
-            style={{ background: "var(--bg-dark)" }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-40 md:hidden bg-[#0a0a0a]"
           >
-            <div className="flex flex-col justify-center items-center h-full gap-8">
+            <div className="flex flex-col justify-center items-center h-full gap-6">
               {navItems.map((item, idx) => (
                 <motion.a
                   key={item}
                   href={`#${item.toLowerCase()}`}
                   onClick={() => setMobileOpen(false)}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="display-md"
-                  style={{ color: "var(--white)" }}
+                  exit={{ opacity: 0, y: 16 }}
+                  transition={{ delay: idx * 0.08 }}
+                  className="display-md text-white"
                 >
                   {item}
                 </motion.a>
@@ -184,11 +153,11 @@ export default function Navbar() {
               <motion.a
                 href="#cta"
                 onClick={() => setMobileOpen(false)}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: 0.4 }}
-                className="btn btn-primary mt-8"
+                exit={{ opacity: 0, y: 16 }}
+                transition={{ delay: 0.35 }}
+                className="btn btn-primary mt-6"
               >
                 Book a call
               </motion.a>

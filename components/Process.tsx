@@ -8,28 +8,28 @@ const STEPS = [
     num: "01",
     name: "Discovery",
     duration: "1-2 days",
-    desc: "Free call. We learn your business, goals, constraints. You leave with a fixed scope, timeline, and quote in 48 hours.",
-    deliverable: "Scope document + fixed quote",
+    desc: "Free call. We learn your goals and constraints. Fixed scope and quote in 48h.",
+    deliverable: "Scope doc + fixed quote",
   },
   {
     num: "02",
-    name: "Design & architecture",
+    name: "Design",
     duration: "3-5 days",
-    desc: "UX flows, technical blueprint, stack decisions. You approve the plan before we write a line of code.",
-    deliverable: "Figma prototype + system diagram",
+    desc: "UX flows, technical blueprint. You approve the plan before we write code.",
+    deliverable: "Figma + system diagram",
   },
   {
     num: "03",
     name: "Build",
     duration: "3-8 weeks",
-    desc: "Senior engineers, weekly demos. You see the real product every Friday — not a status email.",
+    desc: "Senior engineers, weekly demos. See the real product every Friday.",
     deliverable: "Weekly deployable build",
   },
   {
     num: "04",
-    name: "Launch & support",
+    name: "Launch",
     duration: "ongoing",
-    desc: "Production deploy, monitoring, iterate on real user feedback. Your product ships — not a prototype.",
+    desc: "Production deploy, monitoring, iterate on real user feedback.",
     deliverable: "Live product + runbook",
   },
 ];
@@ -39,116 +39,68 @@ export default function Process() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section
-      id="process"
-      ref={ref}
-      className="section-lg relative"
-      style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }}
-    >
+    <section id="process" ref={ref} className="section-lg bg-[#f8f8f8] border-t border-[#e0e0e0]">
       <div className="container">
-        {/* Section header */}
-        <div className="flex flex-col lg:flex-row lg:items-end gap-8 lg:gap-20 mb-16 lg:mb-24">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end gap-6 lg:gap-16 mb-12 lg:mb-20">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
             className="flex-1"
           >
-            <div className="tag tag-light mb-6">How we work together</div>
+            <div className="tag tag-light mb-4">How we work together</div>
             <h2 className="display-lg">
-              Four stages.
-              <br />
-              No <span style={{ color: "var(--electric)" }}>surprises.</span>
+              Four stages. No <span className="text-[#00d4ff]">surprises.</span>
             </h2>
           </motion.div>
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-lg max-w-md"
-            style={{ color: "var(--ink-muted)" }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-base lg:text-lg max-w-md text-[#5c5c5c]"
           >
-            We lock the scope, timeline, and price before we start. Every week, you get a working
-            build — not a status update.
+            We lock scope, timeline, and price before we start. Every week you get a working build.
           </motion.p>
         </div>
 
-        {/* Process timeline */}
+        {/* Timeline */}
         <div className="relative">
-          {/* Connection line - desktop */}
+          {/* Line - desktop */}
           <div
-            className="hidden lg:block absolute top-12 left-0 right-0 h-px"
+            className="hidden lg:block absolute top-10 left-0 right-0 h-px"
             style={{
-              background:
-                "linear-gradient(to right, transparent, var(--border) 10%, var(--border) 90%, transparent)",
+              background: "linear-gradient(to right, transparent, #e0e0e0 10%, #e0e0e0 90%, transparent)",
             }}
           />
 
-          {/* Steps grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+          {/* Steps */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4">
             {STEPS.map((step, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: idx * 0.15 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
                 className="relative"
               >
-                {/* Timeline dot */}
-                <div className="relative mb-8 lg:mb-12">
-                  <div
-                    className="w-5 h-5 rounded-full border-2 relative z-10"
-                    style={{
-                      borderColor: "var(--electric)",
-                      background: "var(--bg)",
-                    }}
-                  >
-                    <div
-                      className="absolute inset-1 rounded-full"
-                      style={{ background: "var(--electric)" }}
-                    />
+                {/* Dot */}
+                <div className="relative mb-6 lg:mb-10">
+                  <div className="w-4 h-4 rounded-full border-2 border-[#00d4ff] bg-[#f8f8f8] relative z-10">
+                    <div className="absolute inset-0.5 rounded-full bg-[#00d4ff]" />
                   </div>
                 </div>
 
                 {/* Content */}
                 <div>
-                  <div
-                    className="mono text-xs mb-3"
-                    style={{ color: "var(--ink-subtle)", letterSpacing: "0.1em" }}
-                  >
-                    STEP {step.num}
-                  </div>
-
-                  <h3 className="font-display text-2xl mb-2">{step.name}</h3>
-
-                  <div
-                    className="mono text-xs mb-4"
-                    style={{ color: "var(--electric)" }}
-                  >
-                    → {step.duration.toUpperCase()}
-                  </div>
-
-                  <p
-                    className="text-sm mb-6 leading-relaxed"
-                    style={{ color: "var(--ink-muted)" }}
-                  >
-                    {step.desc}
-                  </p>
+                  <div className="mono text-[10px] text-[#8c8c8c] mb-2">STEP {step.num}</div>
+                  <h3 className="font-display text-xl mb-1">{step.name}</h3>
+                  <div className="mono text-[11px] text-[#00d4ff] mb-3">→ {step.duration.toUpperCase()}</div>
+                  <p className="text-sm text-[#5c5c5c] mb-4">{step.desc}</p>
 
                   {/* Deliverable */}
-                  <div
-                    className="p-4 rounded-lg"
-                    style={{
-                      background: "var(--bg-warm)",
-                      borderLeft: "2px solid var(--electric)",
-                    }}
-                  >
-                    <div
-                      className="mono text-xs mb-1"
-                      style={{ color: "var(--ink-subtle)" }}
-                    >
-                      YOU GET
-                    </div>
+                  <div className="p-3 rounded-lg bg-white border-l-2 border-[#00d4ff]">
+                    <div className="mono text-[9px] text-[#8c8c8c] mb-0.5">YOU GET</div>
                     <div className="text-sm font-medium">{step.deliverable}</div>
                   </div>
                 </div>

@@ -21,110 +21,93 @@ export default function Hero() {
     return () => clearInterval(t);
   }, []);
 
-  if (!mounted) return <div className="min-h-screen" style={{ background: "var(--bg-dark)" }} />;
+  if (!mounted) return <div className="min-h-screen bg-[#0a0a0a]" />;
 
   return (
     <section
       id="top"
-      className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: "var(--bg-dark)" }}
+      className="relative min-h-screen flex items-center overflow-hidden bg-[#0a0a0a]"
     >
-      {/* Grid pattern background */}
-      <div className="pattern-grid-dark absolute inset-0 opacity-60" />
+      {/* Grid pattern */}
+      <div className="pattern-grid-dark absolute inset-0 opacity-40" />
 
-      {/* Animated gradient orbs */}
+      {/* Cyan gradient orb - top right */}
       <div
-        className="absolute top-[-20%] right-[-10%] w-[60%] h-[80%] rounded-full blur-[120px]"
+        className="absolute top-[-30%] right-[-15%] w-[70%] h-[90%] rounded-full blur-[150px] pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)",
-        }}
-      />
-      <div
-        className="absolute bottom-[-20%] left-[-10%] w-[50%] h-[70%] rounded-full blur-[100px]"
-        style={{
-          background: "radial-gradient(circle, rgba(200, 255, 0, 0.08) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, transparent 60%)",
         }}
       />
 
-      {/* Main content */}
-      <div className="container relative z-10 pt-32 pb-20">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-16 lg:gap-20">
-          {/* Left column - Main content */}
-          <div className="flex-1 max-w-[720px]">
-            {/* Status tag */}
+      {/* Content */}
+      <div className="container relative z-10 pt-28 pb-16 lg:pt-36 lg:pb-24">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16">
+          {/* Left - Main content */}
+          <div className="flex-1 max-w-2xl">
+            {/* Status */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="tag tag-electric mb-8"
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="tag tag-electric mb-6"
             >
               <span className="dot" />
               <span>3 of 4 Q2 slots filled</span>
             </motion.div>
 
-            {/* Main headline */}
+            {/* Headline */}
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="display-xl mb-8"
-              style={{ color: "var(--white)" }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="display-xl mb-6 text-white"
             >
               Your next{" "}
-              <span className="relative inline-block min-w-[3ch]">
+              <span className="relative inline-block">
                 <span className="invisible">{ROTATOR[0].word}</span>
                 {ROTATOR.map((r, idx) => (
                   <motion.span
                     key={idx}
-                    className="absolute inset-0 flex items-center"
+                    className="absolute inset-0 text-[#00d4ff]"
                     initial={false}
                     animate={{
                       opacity: idx === i ? 1 : 0,
-                      y: idx === i ? 0 : idx < i ? -20 : 20,
+                      y: idx === i ? 0 : idx < i ? -16 : 16,
                     }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    style={{ color: "var(--electric)" }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   >
                     {r.word}
                   </motion.span>
                 ))}
               </span>
               <br />
-              <span style={{ color: "var(--white-dim)" }}>Built to last.</span>
+              <span className="text-white/70">Built to last.</span>
               <br />
-              <span style={{ color: "var(--white-dim)" }}>Shipped in weeks.</span>
+              <span className="text-white/70">Shipped in weeks.</span>
             </motion.h1>
 
             {/* Subheadline */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-xl mb-10 max-w-[560px]"
-              style={{ color: "var(--white-muted)" }}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              className="text-lg lg:text-xl mb-8 max-w-lg text-white/60 leading-relaxed"
             >
-              We are a senior engineering studio that treats your product like we treat our own. 
-              Five years in, 25+ products shipped,{" "}
-              <span style={{ color: "var(--electric)" }}>$100M+</span> in critical infrastructure,{" "}
-              <span style={{ color: "var(--white)" }}>zero</span> security incidents.
+              Senior engineering studio. Five years, 25+ products shipped,{" "}
+              <span className="text-[#00d4ff]">$100M+</span> in critical infrastructure,{" "}
+              <span className="text-white">zero</span> security incidents.
             </motion.p>
 
-            {/* CTA buttons */}
+            {/* CTAs */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex flex-wrap gap-4 mb-16"
+              transition={{ duration: 0.5, delay: 0.45 }}
+              className="flex flex-wrap gap-3 mb-12"
             >
               <a href="#cta" className="btn btn-primary">
                 Book a free call
-                <svg
-                  className="arrow"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
+                <svg className="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M3 8h10M9 4l4 4-4 4" />
                 </svg>
               </a>
@@ -133,56 +116,52 @@ export default function Hero() {
               </a>
             </motion.div>
 
-            {/* Stats row */}
+            {/* Stats */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex gap-0"
-              style={{ borderTop: "1px solid var(--border-dark)" }}
+              transition={{ duration: 0.5, delay: 0.55 }}
+              className="flex border-t border-white/10"
             >
               {[
-                { num: "25+", label: "Products shipped", sub: "2020 — today" },
-                { num: "$100M+", label: "Assets secured", sub: "across 4 chains" },
-                { num: "0", label: "Security incidents", sub: "since day one", highlight: true },
+                { num: "25+", label: "Products shipped", highlight: false },
+                { num: "$100M+", label: "Assets secured", highlight: false },
+                { num: "0", label: "Incidents", highlight: true },
               ].map((s, idx) => (
                 <div
                   key={idx}
-                  className="flex-1 pt-8"
+                  className="flex-1 pt-6"
                   style={{
-                    paddingRight: 24,
-                    paddingLeft: idx > 0 ? 24 : 0,
-                    borderRight: idx < 2 ? "1px solid var(--border-dark)" : "none",
+                    paddingRight: idx < 2 ? 20 : 0,
+                    paddingLeft: idx > 0 ? 20 : 0,
+                    borderRight: idx < 2 ? "1px solid rgba(255,255,255,0.1)" : "none",
                   }}
                 >
                   <div
-                    className="font-display text-4xl md:text-5xl mb-2"
+                    className="font-display text-3xl lg:text-4xl mb-1"
                     style={{
-                      color: s.highlight ? "var(--coral)" : "var(--white)",
+                      color: s.highlight ? "#ff3b30" : "#00d4ff",
                       fontFeatureSettings: '"tnum"',
                     }}
                   >
                     {s.num}
                   </div>
-                  <div className="text-sm mb-1" style={{ color: "var(--white-dim)" }}>
+                  <div className="text-xs lg:text-sm text-white/50">
                     {s.label}
-                  </div>
-                  <div className="mono text-xs" style={{ color: "var(--white-subtle)" }}>
-                    {s.sub}
                   </div>
                 </div>
               ))}
             </motion.div>
           </div>
 
-          {/* Right column - Visual element */}
+          {/* Right - Visual */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="hidden lg:block flex-shrink-0 w-[460px]"
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="hidden lg:block flex-shrink-0 w-[400px]"
           >
-            <LiveProductMock rotatorIdx={i} />
+            <ProductMock rotatorIdx={i} />
           </motion.div>
         </div>
       </div>
@@ -191,176 +170,135 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+        transition={{ delay: 1 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="mono text-xs" style={{ color: "var(--white-subtle)", letterSpacing: "0.2em" }}>
-          SCROLL
-        </span>
+        <span className="mono text-[10px] text-white/30 tracking-[0.2em]">SCROLL</span>
         <motion.div
-          animate={{ y: [0, 8, 0] }}
+          animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-px h-8"
-          style={{ background: "var(--white-subtle)" }}
+          className="w-px h-6 bg-white/20"
         />
       </motion.div>
     </section>
   );
 }
 
-function LiveProductMock({ rotatorIdx }: { rotatorIdx: number }) {
+function ProductMock({ rotatorIdx }: { rotatorIdx: number }) {
   const data = ROTATOR[rotatorIdx];
 
   return (
     <div className="relative">
       {/* Label */}
-      <div
-        className="mono text-xs mb-4"
-        style={{ color: "var(--white-subtle)", letterSpacing: "0.1em" }}
-      >
+      <div className="mono text-[10px] text-white/30 mb-3 tracking-widest">
         FIG.01 — {data.tag.toUpperCase()}
       </div>
 
-      {/* Mock terminal/dashboard */}
+      {/* Terminal card */}
       <motion.div
-        className="relative rounded-2xl overflow-hidden"
+        className="rounded-xl overflow-hidden border border-white/10"
         style={{
-          background: "linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%)",
-          border: "1px solid var(--border-dark)",
-          boxShadow: "0 40px 80px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(0, 212, 255, 0.1)",
+          background: "linear-gradient(180deg, #141414 0%, #0a0a0a 100%)",
+          boxShadow: "0 32px 64px -16px rgba(0,0,0,0.6), 0 0 0 1px rgba(0, 212, 255, 0.08)",
         }}
-        whileHover={{ scale: 1.02 }}
-        transition={{ duration: 0.3 }}
+        whileHover={{ scale: 1.01 }}
+        transition={{ duration: 0.25 }}
       >
-        {/* Window controls */}
-        <div
-          className="flex items-center gap-3 px-4 py-3"
-          style={{ borderBottom: "1px solid var(--border-dark)" }}
-        >
-          <div className="flex gap-2">
-            <span className="w-3 h-3 rounded-full" style={{ background: "#ff5f57" }} />
-            <span className="w-3 h-3 rounded-full" style={{ background: "#febc2e" }} />
-            <span className="w-3 h-3 rounded-full" style={{ background: "#28c840" }} />
+        {/* Window bar */}
+        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/8">
+          <div className="flex gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
           </div>
-          <div className="flex-1 text-center mono text-xs" style={{ color: "var(--white-subtle)" }}>
-            ~/buidly/{data.word.replace(/ /g, "-").toLowerCase()}
+          <div className="flex-1 text-center mono text-[10px] text-white/30">
+            ~/buidly/{data.word.replace(/ /g, "-")}
           </div>
-          <div className="mono text-xs" style={{ color: "var(--electric)" }}>
-            ● LIVE
-          </div>
+          <div className="mono text-[10px] text-[#00d4ff]">● LIVE</div>
         </div>
 
-        <div className="p-5">
-          {/* Project header */}
-          <div className="flex justify-between items-start mb-5">
+        <div className="p-4">
+          {/* Header */}
+          <div className="flex justify-between items-start mb-4">
             <div>
-              <div className="mono text-xs mb-1" style={{ color: "var(--electric)" }}>
+              <div className="mono text-[10px] text-[#00d4ff] mb-0.5">
                 PROJECT / {data.tag.split(" / ")[0].toUpperCase()}
               </div>
-              <div className="font-display text-lg" style={{ color: "var(--white)" }}>
+              <div className="font-display text-base text-white">
                 Your next {data.word}
               </div>
             </div>
-            <div className="mono text-xs" style={{ color: "var(--white-subtle)" }}>
-              wk 4 / 6
-            </div>
+            <div className="mono text-[10px] text-white/30">wk 4/6</div>
           </div>
 
-          {/* Progress bars */}
-          <div className="space-y-3 mb-5">
+          {/* Progress */}
+          <div className="space-y-2 mb-4">
             {[
-              { l: "Discover", d: 100 },
-              { l: "Design", d: 100 },
-              { l: "Build", d: 68 },
-              { l: "Launch", d: 0 },
-            ].map((s, idx) => (
+              { l: "Discover", p: 100 },
+              { l: "Design", p: 100 },
+              { l: "Build", p: 68 },
+              { l: "Launch", p: 0 },
+            ].map((step, idx) => (
               <div key={idx}>
-                <div
-                  className="flex justify-between text-xs mb-1"
-                  style={{ color: s.d === 100 ? "var(--electric)" : "var(--white-muted)" }}
-                >
-                  <span>
-                    {idx + 1}. {s.l}
-                  </span>
-                  {s.d === 100 && (
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <path d="M2.5 6l2.5 2.5 5-5" stroke="currentColor" strokeWidth="1.5" />
+                <div className="flex justify-between text-[10px] mb-0.5" style={{ color: step.p === 100 ? "#00d4ff" : "rgba(255,255,255,0.5)" }}>
+                  <span>{idx + 1}. {step.l}</span>
+                  {step.p === 100 && (
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                      <path d="M2 5l2 2 4-4" stroke="currentColor" strokeWidth="1.5" />
                     </svg>
                   )}
                 </div>
-                <div
-                  className="h-1 rounded-full overflow-hidden"
-                  style={{ background: "var(--border-dark)" }}
-                >
+                <div className="h-0.5 rounded-full bg-white/10 overflow-hidden">
                   <motion.div
                     className="h-full rounded-full"
-                    style={{
-                      background: s.d === 100 ? "var(--green)" : "var(--electric)",
-                    }}
+                    style={{ background: step.p === 100 ? "#00c853" : "#00d4ff" }}
                     initial={{ width: 0 }}
-                    animate={{ width: `${s.d}%` }}
-                    transition={{ duration: 0.8, delay: idx * 0.1 }}
+                    animate={{ width: `${step.p}%` }}
+                    transition={{ duration: 0.6, delay: idx * 0.08 }}
                   />
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Terminal output */}
-          <div
-            className="rounded-lg p-3 mono text-xs leading-relaxed"
-            style={{ background: "rgba(0,0,0,0.4)", border: "1px solid var(--border-dark)" }}
-          >
-            <div style={{ color: "var(--white-subtle)" }}>
-              <span style={{ color: "var(--electric)" }}>$</span> buidly deploy --env production
+          {/* Terminal */}
+          <div className="rounded-lg p-2.5 mono text-[10px] leading-relaxed bg-black/40 border border-white/5">
+            <div className="text-white/30">
+              <span className="text-[#00d4ff]">$</span> buidly deploy --prod
             </div>
-            <div style={{ color: "var(--white-muted)" }}>
-              → Tests <span style={{ color: "var(--green)" }}>1,247 passed</span>
+            <div className="text-white/50">
+              → Tests <span className="text-[#00c853]">1,247 passed</span>
             </div>
-            <div style={{ color: "var(--white-muted)" }}>
-              → Bundle <span style={{ color: "var(--lime)" }}>142kb</span> gzip
+            <div className="text-white/50">
+              → Bundle <span className="text-[#b8e600]">142kb</span> gzip
             </div>
-            <div style={{ color: "var(--green)" }}>✓ Shipped in 4m 12s</div>
+            <div className="text-[#00c853]">✓ Shipped in 4m 12s</div>
           </div>
 
           {/* Metrics */}
-          <div className="grid grid-cols-2 gap-3 mt-4">
+          <div className="grid grid-cols-2 gap-2 mt-3">
             {[
               { l: "Uptime", v: "99.98%" },
-              { l: "p95 latency", v: "84ms" },
+              { l: "p95", v: "84ms" },
             ].map((m, idx) => (
-              <div
-                key={idx}
-                className="rounded-lg p-3"
-                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--border-dark)" }}
-              >
-                <div className="mono text-xs mb-1" style={{ color: "var(--white-subtle)" }}>
-                  {m.l.toUpperCase()}
-                </div>
-                <div className="font-display text-xl" style={{ color: "var(--white)" }}>
-                  {m.v}
-                </div>
+              <div key={idx} className="rounded-lg p-2.5 bg-white/3 border border-white/5">
+                <div className="mono text-[9px] text-white/30 mb-0.5">{m.l.toUpperCase()}</div>
+                <div className="font-display text-lg text-white">{m.v}</div>
               </div>
             ))}
           </div>
         </div>
       </motion.div>
 
-      {/* Floating badge */}
+      {/* Badge */}
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-        className="absolute -bottom-4 -right-4 flex items-center gap-2 px-4 py-2 rounded-xl"
-        style={{
-          background: "var(--bg-card)",
-          boxShadow: "0 20px 40px -10px rgba(0,0,0,0.4)",
-        }}
+        transition={{ delay: 0.7 }}
+        className="absolute -bottom-3 -right-3 flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white shadow-xl"
       >
         <span className="dot" />
-        <span className="text-sm font-medium" style={{ color: "var(--ink)" }}>
-          Deployed 4m ago
-        </span>
+        <span className="text-xs font-medium text-[#0a0a0a]">Deployed 4m ago</span>
       </motion.div>
     </div>
   );

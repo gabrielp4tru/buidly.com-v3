@@ -1,69 +1,61 @@
-/* Buidly — Industrial Tech Hub Aesthetic */
+/* Buidly — Industrial Berlin Tech Hub */
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
 
 :root {
-  /* Core palette — Light industrial with electric accent */
-  --bg: #fafafa;
-  --bg-warm: #f5f5f5;
+  /* Core palette — Industrial Light with Electric Cyan */
+  --bg: #f8f8f8;
+  --bg-warm: #f2f2f2;
   --bg-card: #ffffff;
-  --bg-dark: #0d0d0d;
-  --bg-dark-elevated: #1a1a1a;
+  --bg-dark: #0a0a0a;
+  --bg-dark-elevated: #141414;
   
-  /* Electric accent — Cyan/Electric Blue for dynamics */
+  /* Electric Cyan — Primary Accent */
   --electric: #00d4ff;
-  --electric-dim: rgba(0, 212, 255, 0.15);
-  --electric-glow: rgba(0, 212, 255, 0.4);
+  --electric-bright: #00e8ff;
+  --electric-dim: rgba(0, 212, 255, 0.12);
+  --electric-glow: rgba(0, 212, 255, 0.5);
   
-  /* Secondary accent */
-  --lime: #c8ff00;
-  --lime-dim: rgba(200, 255, 0, 0.12);
+  /* Secondary — Muted lime for subtle accent */
+  --lime: #b8e600;
+  --lime-dim: rgba(184, 230, 0, 0.1);
   
-  /* Text hierarchy */
-  --ink: #0d0d0d;
-  --ink-secondary: #3d3d3d;
-  --ink-muted: #6b6b6b;
-  --ink-subtle: #9a9a9a;
+  /* Industrial neutrals */
+  --ink: #0a0a0a;
+  --ink-secondary: #2a2a2a;
+  --ink-muted: #5c5c5c;
+  --ink-subtle: #8c8c8c;
   
   /* Inverted for dark sections */
   --white: #ffffff;
-  --white-dim: rgba(255, 255, 255, 0.7);
-  --white-muted: rgba(255, 255, 255, 0.5);
-  --white-subtle: rgba(255, 255, 255, 0.25);
+  --white-dim: rgba(255, 255, 255, 0.8);
+  --white-muted: rgba(255, 255, 255, 0.6);
+  --white-subtle: rgba(255, 255, 255, 0.3);
   
-  /* Borders & dividers */
-  --border: #e5e5e5;
-  --border-strong: #d4d4d4;
-  --border-dark: rgba(255, 255, 255, 0.1);
+  /* Borders */
+  --border: #e0e0e0;
+  --border-strong: #c8c8c8;
+  --border-dark: rgba(255, 255, 255, 0.08);
   
   /* Status */
   --green: #00c853;
-  --coral: #ff4757;
+  --coral: #ff3b30;
   
-  /* Radius system */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 32px;
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
   
   /* Motion */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --duration-fast: 0.15s;
-  --duration-normal: 0.3s;
-  --duration-slow: 0.6s;
-  
-  /* Spacing scale */
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 40px;
-  --space-2xl: 64px;
-  --space-3xl: 100px;
+  --duration-normal: 0.25s;
+  --duration-slow: 0.5s;
 }
 
-/* Reset & base */
+/* Reset */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -90,7 +82,7 @@ button {
   padding: 0;
 }
 
-/* Typography classes */
+/* Typography */
 .font-display { 
   font-family: "Space Grotesk", sans-serif; 
   font-weight: 700;
@@ -102,37 +94,37 @@ button {
 .mono { 
   font-family: "JetBrains Mono", ui-monospace, monospace; 
   font-feature-settings: "zero", "ss01";
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
-/* Display headlines */
+/* Display sizes */
 .display-xl {
   font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(48px, 10vw, 120px);
+  font-size: clamp(44px, 9vw, 96px);
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 0.95;
 }
 .display-lg {
   font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(36px, 6vw, 72px);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1;
-}
-.display-md {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(28px, 4vw, 48px);
+  font-size: clamp(32px, 5vw, 64px);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.05;
 }
+.display-md {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
 .display-sm {
   font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(22px, 2.5vw, 32px);
+  font-size: clamp(20px, 2vw, 28px);
   font-weight: 600;
   letter-spacing: -0.02em;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
 /* Body text */
@@ -142,39 +134,33 @@ button {
 .text-sm { font-size: 14px; line-height: 1.5; }
 .text-xs { font-size: 12px; line-height: 1.5; }
 
-/* Layout containers */
+/* Layout */
 .container {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 0 24px;
-}
-.container-wide {
-  width: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 20px;
 }
 @media (min-width: 768px) {
-  .container, .container-wide { padding: 0 48px; }
+  .container { padding: 0 40px; }
 }
 @media (min-width: 1200px) {
-  .container, .container-wide { padding: 0 64px; }
+  .container { padding: 0 60px; }
 }
 
-/* Section spacing */
+/* Sections */
 .section {
   padding: 80px 0;
 }
 .section-lg {
-  padding: 120px 0;
+  padding: 100px 0;
 }
 @media (min-width: 768px) {
-  .section { padding: 120px 0; }
-  .section-lg { padding: 160px 0; }
+  .section { padding: 100px 0; }
+  .section-lg { padding: 140px 0; }
 }
 
-/* Tag/Label styles */
+/* Tags */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -184,16 +170,16 @@ button {
   font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 .tag-electric {
   background: var(--electric-dim);
   color: var(--electric);
-  border: 1px solid rgba(0, 212, 255, 0.3);
+  border: 1px solid rgba(0, 212, 255, 0.25);
 }
 .tag-dark {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--white-dim);
   border: 1px solid var(--border-dark);
 }
@@ -203,18 +189,17 @@ button {
   border: 1px solid var(--border);
 }
 
-/* Buttons — 3 CTA types */
-/* Primary: Electric filled */
+/* Buttons — 3 CTA Types */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  height: 52px;
-  padding: 0 28px;
+  height: 48px;
+  padding: 0 24px;
   border-radius: var(--radius-md);
   font-family: "Space Grotesk", sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
   transition: all var(--duration-normal) var(--ease);
@@ -223,35 +208,36 @@ button {
   overflow: hidden;
 }
 .btn svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   transition: transform var(--duration-normal) var(--ease);
 }
-.btn:hover svg.arrow { transform: translateX(4px); }
+.btn:hover svg.arrow { transform: translateX(3px); }
 
+/* Primary: Electric Cyan - high visibility */
 .btn-primary {
   background: var(--electric);
   color: var(--bg-dark);
+  box-shadow: 0 0 0 1px var(--electric), 0 4px 20px -4px var(--electric-glow);
 }
 .btn-primary:hover {
-  background: #33e0ff;
+  background: var(--electric-bright);
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px -8px var(--electric-glow);
+  box-shadow: 0 0 0 1px var(--electric-bright), 0 12px 32px -8px var(--electric-glow);
 }
 
 /* Secondary: Outlined */
 .btn-secondary {
   background: transparent;
   color: var(--ink);
-  border: 1.5px solid var(--border-strong);
+  border: 1.5px solid var(--ink);
 }
 .btn-secondary:hover {
   background: var(--ink);
   color: var(--white);
-  border-color: var(--ink);
 }
 
-/* Tertiary: Text with underline */
+/* Tertiary: Text link */
 .btn-tertiary {
   height: auto;
   padding: 0;
@@ -267,23 +253,26 @@ button {
   left: 0;
   width: 100%;
   height: 1px;
-  background: currentColor;
+  background: var(--electric);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform var(--duration-normal) var(--ease);
 }
+.btn-tertiary:hover { color: var(--electric); }
 .btn-tertiary:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
 
-/* Dark variants */
+/* Dark section variants */
 .btn-primary-dark {
   background: var(--white);
   color: var(--bg-dark);
+  box-shadow: 0 4px 20px -4px rgba(255, 255, 255, 0.3);
 }
 .btn-primary-dark:hover {
   background: var(--electric);
+  color: var(--bg-dark);
   box-shadow: 0 12px 32px -8px var(--electric-glow);
 }
 .btn-secondary-dark {
@@ -297,7 +286,7 @@ button {
   border-color: var(--white);
 }
 
-/* Card base */
+/* Cards */
 .card {
   background: var(--bg-card);
   border-radius: var(--radius-lg);
@@ -306,64 +295,56 @@ button {
 }
 .card:hover {
   border-color: var(--border-strong);
-  box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.1);
 }
 
-/* Electric glow effect */
-.glow-electric {
-  box-shadow: 
-    0 0 20px var(--electric-dim),
-    0 0 60px var(--electric-dim),
-    0 0 100px rgba(0, 212, 255, 0.1);
+/* Electric highlight for key elements */
+.electric-highlight {
+  position: relative;
+}
+.electric-highlight::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--electric) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease);
+  z-index: -1;
+}
+.electric-highlight:hover::before {
+  opacity: 0.1;
 }
 
 /* Dot indicator */
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--green);
-  box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.2);
+  box-shadow: 0 0 0 2px rgba(0, 200, 83, 0.25);
   animation: pulse 2s ease-in-out infinite;
 }
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.9); }
 }
 
-/* Grid pattern background */
+/* Grid patterns */
 .pattern-grid {
   background-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 .pattern-grid-dark {
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-/* Noise overlay */
-.noise::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.03;
-  pointer-events: none;
-}
-
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, var(--electric) 0%, var(--lime) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Marquee animation */
+/* Marquee */
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -371,24 +352,13 @@ button {
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 30s linear infinite;
+  animation: marquee 25s linear infinite;
 }
 .marquee-track:hover {
   animation-play-state: paused;
 }
 
-/* Scroll reveal */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Focus states */
+/* Focus */
 :focus-visible {
   outline: 2px solid var(--electric);
   outline-offset: 2px;
@@ -403,21 +373,21 @@ button {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border-strong);
-  border-radius: 4px;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--ink-muted);
 }
 
-/* Mobile responsive utilities */
+/* Responsive utilities */
 @media (max-width: 768px) {
   .hide-mobile { display: none !important; }
 }
@@ -425,7 +395,6 @@ button {
   .hide-desktop { display: none !important; }
 }
 
-/* Horizontal rule */
 hr {
   border: none;
   height: 1px;

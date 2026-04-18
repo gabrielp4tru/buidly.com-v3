@@ -17,57 +17,41 @@ const LOGOS = [
 
 export default function TrustBar() {
   return (
-    <section
-      className="relative py-8 overflow-hidden"
-      style={{ background: "var(--bg-card)", borderBottom: "1px solid var(--border)" }}
-    >
+    <section className="relative py-6 bg-white border-b border-[#e0e0e0]">
       <div className="container">
-        <div className="flex flex-col lg:flex-row lg:items-center gap-8">
-          {/* Stats badge */}
+        <div className="flex flex-col lg:flex-row lg:items-center gap-6">
+          {/* Zero incidents badge */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="flex items-center gap-4 px-5 py-3 rounded-full shrink-0"
-            style={{
-              background: "var(--bg-warm)",
-              border: "1px solid var(--border)",
-            }}
+            className="flex items-center gap-3 px-4 py-2 rounded-full bg-[#f2f2f2] border border-[#e0e0e0] shrink-0"
           >
-            <span
-              className="font-display text-3xl"
-              style={{ color: "var(--coral)", fontFeatureSettings: '"tnum"' }}
-            >
-              0
-            </span>
+            <span className="font-display text-2xl text-[#ff3b30]">0</span>
             <div className="text-sm">
-              <span style={{ color: "var(--ink)" }}>security incidents</span>
-              <span style={{ color: "var(--ink-muted)" }}> / 5 years, 25+ products</span>
+              <span className="text-[#0a0a0a] font-medium">security incidents</span>
+              <span className="text-[#8c8c8c]"> / 5 yrs</span>
             </div>
           </motion.div>
 
-          {/* Marquee logos */}
+          {/* Marquee */}
           <div
             className="flex-1 overflow-hidden relative"
             style={{
-              maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-              WebkitMaskImage:
-                "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+              maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+              WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
             }}
           >
             <div className="marquee-track">
               {[...LOGOS, ...LOGOS].map((name, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center px-8 shrink-0"
-                  style={{ opacity: 0.5 }}
-                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.5")}
+                  className="flex items-center px-6 shrink-0 transition-opacity"
+                  style={{ opacity: 0.4 }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.4")}
                 >
-                  <span
-                    className="font-display text-base whitespace-nowrap"
-                    style={{ color: "var(--ink)", letterSpacing: "-0.02em" }}
-                  >
+                  <span className="font-display text-sm text-[#0a0a0a] whitespace-nowrap tracking-tight">
                     {name}
                   </span>
                 </div>
